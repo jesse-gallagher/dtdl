@@ -25,13 +25,11 @@ import frostillicus.dtdl.app.triggers.LogHandler;
 
 /**
  * Servlet listener for initializing the application.
- * 
- * @author Philippe Riand
  */
 public class AppContextListener extends AbstractDarwinoContextListener {
 	
-	public static final boolean HAS_TRIGGERS 	= false;
-	public static final boolean HAS_TASKS 		= false;
+	public static boolean HAS_TRIGGERS 	= false;
+	public static boolean HAS_TASKS 		= false;
 
 	private BackgroundServletSynchronizationExecutor syncExecutor; 
 	private EventBuilderFactory triggers;
