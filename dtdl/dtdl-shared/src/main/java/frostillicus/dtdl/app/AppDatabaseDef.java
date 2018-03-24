@@ -18,7 +18,7 @@ import com.darwino.jsonstore.meta._Database;
 public class AppDatabaseDef extends DatabaseFactoryImpl {
 
 	public static final int DATABASE_VERSION	= 1;
-	public static final String DATABASE_NAME	= "dtdl";
+	public static final String DATABASE_NAME	= "dtdl"; //$NON-NLS-1$
 	
     public static final String[] DATABASES = new String[] {
     	DATABASE_NAME
@@ -27,7 +27,7 @@ public class AppDatabaseDef extends DatabaseFactoryImpl {
 	// The list  of instances is defined through a property for the DB
 	public static String[] getInstances() {
 		//JsonArray a = new JsonArray(session.getDatabaseInstances(dbName));
-		String inst = Platform.getProperty("dtdl.instances");
+		String inst = Platform.getProperty("dtdl.instances"); //$NON-NLS-1$
 		if(StringUtil.isNotEmpty(inst)) {
 			return StringUtil.splitString(inst, ',', true);
 		}
@@ -56,7 +56,7 @@ public class AppDatabaseDef extends DatabaseFactoryImpl {
 	}
 	
 	public _Database loadDatabase_dtdl() throws JsonException {
-		_Database db = new _Database(DATABASE_NAME, "Darwino To-Do List", DATABASE_VERSION);
+		_Database db = new _Database(DATABASE_NAME, "Darwino To-Do List", DATABASE_VERSION); //$NON-NLS-1$
 
 		db.setReplicationEnabled(true);
 		

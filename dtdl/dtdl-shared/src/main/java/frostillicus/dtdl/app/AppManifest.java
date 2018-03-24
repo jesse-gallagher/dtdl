@@ -19,10 +19,10 @@ import com.darwino.platform.DarwinoManifest;
  */
 public class AppManifest extends DarwinoManifest {
 	
-	public static String CONFIG_ID = "dtdl";
+	public static String CONFIG_ID = "dtdl"; //$NON-NLS-1$
 	
 	// This is used by the mobile application to call the remote service
-	public static final String MOBILE_PATHINFO	= "dtdl";
+	public static final String MOBILE_PATHINFO	= "dtdl"; //$NON-NLS-1$
 	
 	public static Session getSession() throws JsonException {
 		return DarwinoContext.get().getSession();
@@ -44,17 +44,17 @@ public class AppManifest extends DarwinoManifest {
 	
 	@Override
 	public String getLabel() {
-		return "Darwino To-Do List";
+		return Messages.getString("AppManifest.label"); //$NON-NLS-1$
 	}
 	
 	@Override
 	public String getDescription() {
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 	
 	@Override
 	public String getMainPageUrl() {
-		return "index.html";
+		return "index.html"; //$NON-NLS-1$
 	}
 	
 	@Override

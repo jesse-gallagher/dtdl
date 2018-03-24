@@ -12,7 +12,7 @@ import frostillicus.dtdl.app.model.Source;
 import lombok.val;
 
 public class SourceTypes implements JsonMicroService {
-	public static final String NAME = "SourceTypes";
+	public static final String NAME = "SourceTypes"; //$NON-NLS-1$
 
 	@Override
 	public void execute(JsonMicroServiceContext context) throws JsonException {
@@ -20,8 +20,8 @@ public class SourceTypes implements JsonMicroService {
 		
 		Arrays.stream(Source.Type.values())
 			.map(t -> JsonObject.of(
-				"id", t.name(),
-				"name", t.getFriendlyName()
+				"id", t.name(), //$NON-NLS-1$
+				"name", t.getFriendlyName() //$NON-NLS-1$
 			))
 			.forEach(result::add);
 		

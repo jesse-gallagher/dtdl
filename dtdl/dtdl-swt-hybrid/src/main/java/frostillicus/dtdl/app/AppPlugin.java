@@ -17,7 +17,7 @@ import com.darwino.mobile.platform.commands.CommandsExtension;
 public class AppPlugin extends AppMobilePlugin {
 	
 	public AppPlugin() {
-		super("SWT Application");
+		super("SWT Application"); //$NON-NLS-1$
 	}
 
 	@Override

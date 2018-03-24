@@ -22,7 +22,7 @@ import com.darwino.j2ee.servlet.authentication.AuthenticationService;
 public class AppPlugin extends PluginImpl {
 	
 	public AppPlugin() {
-		super("J2EE Application");
+		super("J2EE Application"); //$NON-NLS-1$
 	}
 
 	@Override

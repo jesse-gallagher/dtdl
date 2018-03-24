@@ -49,7 +49,7 @@ public class SwtMainClass extends SwtMain {
 
 	@Override
 	public String getApplicationId() {
-		return "com.darwino.dominodisc";
+		return "frostillicus.dtdl"; //$NON-NLS-1$
 	}
 	
 	@Override
@@ -60,10 +60,11 @@ public class SwtMainClass extends SwtMain {
 		try {
 			AppHybridApplication.create(this);
 		} catch(JsonException ex) {
-			throw new RuntimeException("Unable to create Darwino application", ex);
+			throw new RuntimeException("Unable to create Darwino application", ex); //$NON-NLS-1$
 		}
 	}
 	
+	@Override
 	public void execute() {
 		onCreate();
 		try {
@@ -120,7 +121,7 @@ public class SwtMainClass extends SwtMain {
 	
 	@Override
 	public Image[] getIcons() {
-		try(InputStream is = getClass().getResourceAsStream("/application-x-executable.png")) {
+		try(InputStream is = getClass().getResourceAsStream("/application-x-executable.png")) { //$NON-NLS-1$
 			Image icon = new Image(Display.getDefault(), is);
 			return new Image[] { icon };
 		} catch (Throwable t) {
