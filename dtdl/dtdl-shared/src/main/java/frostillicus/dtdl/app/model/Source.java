@@ -1,7 +1,6 @@
 package frostillicus.dtdl.app.model;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.jnosql.artemis.Column;
 import org.jnosql.artemis.Embeddable;
@@ -17,7 +16,7 @@ import lombok.ToString;
 public class Source {
 	@AllArgsConstructor
 	public enum Type {
-		GITHUB("GitHub");
+		GITHUB(Messages.getString("Source.type.github")); //$NON-NLS-1$
 		
 		@Getter private final String friendlyName;
 	}
@@ -31,7 +30,7 @@ public class Source {
 	@Id @Getter @Setter @NotEmpty
 	private String id;
 	
-	@Column @Getter @Setter @NotNull
+	@Column @Getter @Setter
 	private Type type;
 	
 	@Column @Getter @Setter
