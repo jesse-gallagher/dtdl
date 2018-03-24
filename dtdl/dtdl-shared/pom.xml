@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>org.eclipse.mylyn.github</groupId>
 			<artifactId>org.eclipse.egit.github.core</artifactId>
-			<version>2.1.5</version>
+			<version>3.4.0.201406110918-r</version>
 		</dependency>
 
 		<dependency>
@@ -99,12 +99,12 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.7.Final</version>
+			<version>6.0.8.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.el</artifactId>
-			<version>3.0.1-b08</version>
+			<version>3.0.1-b10</version>
 		</dependency>
 	</dependencies>
 </project>
