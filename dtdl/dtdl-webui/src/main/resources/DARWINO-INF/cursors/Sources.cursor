@@ -1,0 +1,11 @@
+{
+  "store": "_default",
+  "extract": {
+	"unid": "_unid",
+    "name": "name",
+    "cdate": "_cdate"
+  },
+  //"query": "{form: 'myform'}",
+  "options": "DATA_MODDATES",
+  "orderBy": "name"
+}

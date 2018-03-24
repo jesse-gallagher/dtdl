@@ -35,6 +35,9 @@
 		<android.plugin.version>4.3.0</android.plugin.version>
 		<android.platform.maven.version>4.4.2_r4</android.platform.maven.version>
 		<android.platform.sdk.version>19</android.platform.sdk.version>
+		
+		<jnosql-version>0.0.4-SNAPSHOT</jnosql-version>
+		<weld-version>2.4.6.Final</weld-version>
 	</properties>
 
 
@@ -94,6 +97,7 @@
 				
 				
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>2.6</version>
 				</plugin>

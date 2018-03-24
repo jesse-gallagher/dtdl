@@ -6,19 +6,13 @@ package frostillicus.dtdl.app;
 
 import com.darwino.commons.microservices.StaticJsonMicroServicesFactory;
 
-import frostillicus.dtdl.app.microservices.HelloWorld;
+import frostillicus.dtdl.app.microservices.Issues;
+import frostillicus.dtdl.app.microservices.SourceTypes;
 
-
-/**
- * Application Micro Services Factory.
- * 
- * This is the place where to define custom application micro services.
- * 
- * @author Philippe Riand
- */
 public class AppMicroServicesFactory extends StaticJsonMicroServicesFactory {
 	
 	public AppMicroServicesFactory() {
-		add(HelloWorld.NAME, new HelloWorld());
+		add(Issues.NAME, new Issues());
+		add(SourceTypes.NAME, new SourceTypes());
 	}
 }
