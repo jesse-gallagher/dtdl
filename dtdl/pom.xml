@@ -13,7 +13,11 @@
 		<module>dtdl-j2ee</module>
 		<module>dtdl-mobile</module>
 		<module>dtdl-swt-hybrid</module>
-  </modules>
+	</modules>
+	
+	<prerequisites>
+		<maven>3.5.0</maven>
+	</prerequisites>
 
 	<properties>
 		<DARWINO_VERSION>2.1.0-SNAPSHOT</DARWINO_VERSION>
@@ -27,14 +31,6 @@
 		<manifest-location>META-INF</manifest-location>
 		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
 		<osgi.qualifier>${maven.build.timestamp}</osgi.qualifier>
-
-		
-		<moe.plugin.version>1.4.1</moe.plugin.version>
-        <moe.gradle.version>2.5</moe.gradle.version>
-		
-		<android.plugin.version>4.3.0</android.plugin.version>
-		<android.platform.maven.version>4.4.2_r4</android.platform.maven.version>
-		<android.platform.sdk.version>19</android.platform.sdk.version>
 		
 		<jnosql-version>0.0.4-SNAPSHOT</jnosql-version>
 		<weld-version>2.4.6.Final</weld-version>
@@ -47,13 +43,6 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.12</version>
-			</dependency>
-			
-			<!-- Android dependencies -->
-			<dependency>
-				<groupId>android</groupId>
-				<artifactId>android</artifactId>
-				<version>${android.platform.maven.version}</version>
 			</dependency>
 			
 			<dependency>
@@ -83,71 +72,23 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
+					<version>3.7.0</version>
 					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
+						<source>9</source>
+						<target>9</target>
 					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.17</version>
+					<version>2.21.0</version>
 				</plugin>
 				
 				
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.6</version>
-				</plugin>
-				
-				<plugin>
-					<groupId>org.multi-os-engine</groupId>
-					<artifactId>moe-maven</artifactId>
-					<version>${moe.plugin.version}</version>
-				</plugin>
-				
-				<plugin>
-					<groupId>com.simpligility.maven.plugins</groupId>
-					<artifactId>android-maven-plugin</artifactId>
-					<version>${android.plugin.version}</version>
-					<extensions>true</extensions>
-					
-					<configuration>
-						<sdk>
-							<platform>${android.platform.sdk.version}</platform>
-						</sdk>
-						<androidManifestFile>${basedir}/AndroidManifest.xml</androidManifestFile>
-						<resourceDirectory>${basedir}/res</resourceDirectory>
-						<nativeLibrariesDirectory>${basedir}/libs</nativeLibrariesDirectory>
-						<assetsDirectory>${basedir}/assets</assetsDirectory>
-					</configuration>
-				</plugin>
-				
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>com.simpligility.maven.plugins</groupId>
-										<artifactId>android-maven-plugin</artifactId>
-										<versionRange>[3.8.2,)</versionRange>
-										<goals>
-											<goal>emma</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
+					<version>3.0.2</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
