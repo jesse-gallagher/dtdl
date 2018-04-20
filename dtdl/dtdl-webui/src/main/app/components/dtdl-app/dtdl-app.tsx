@@ -16,7 +16,6 @@
 
 import { Component } from '@stencil/core';
 
-
 @Component({
   tag: 'dtdl-app',
   styleUrl: 'dtdl-app.css'
@@ -44,17 +43,17 @@ export class DTDLApp {
                 </ul>
               </div>
             </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+              <stencil-router>
+                <stencil-route url='/' component='app-home' exact={true}>
+                </stencil-route>
+
+                <stencil-route url='/profile/:name' component='app-profile'>
+                </stencil-route>
+              </stencil-router>
+            </main>
           </div>
-
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <stencil-router>
-              <stencil-route url='/' component='app-home' exact={true}>
-              </stencil-route>
-
-              <stencil-route url='/profile/:name' component='app-profile'>
-              </stencil-route>
-            </stencil-router>
-          </main>
         </div>
       </div>
     );
