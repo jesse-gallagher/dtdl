@@ -15,15 +15,22 @@
  */
 package frostillicus.dtdl.app.model;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.constraints.NotEmpty;
 
 import org.jnosql.artemis.Column;
-import org.jnosql.artemis.Embeddable;
 import org.jnosql.artemis.Entity;
 import org.jnosql.artemis.Id;
 
+import frostillicus.dtdl.app.model.info.GitHubInfo;
+import frostillicus.dtdl.app.model.info.InfoHolder;
+import frostillicus.dtdl.app.model.issues.IssueProvider;
+import frostillicus.dtdl.app.model.util.ModelUtil;
+import frostillicus.dtdl.app.model.issues.GitHubIssueProvider;
+import frostillicus.dtdl.app.model.issues.Issue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,15 +40,20 @@ import lombok.ToString;
 public class Source {
 	@AllArgsConstructor
 	public enum Type {
-		GITHUB(Messages.getString("Source.type.github")); //$NON-NLS-1$
+		GITHUB(
+			Messages.getString("Source.type.github"), //$NON-NLS-1$
+			GitHubInfo.class,
+			GitHubIssueProvider.class
+		);
 		
 		@Getter private final String friendlyName;
-	}
-	
-	@Embeddable
-	public static class GitHubInfo {
-		@Column @Getter @Setter @NotEmpty
-		private String token;
+		@Getter private final Class<? extends InfoHolder> infoClass;
+		@Getter private final Class<? extends IssueProvider<?>> issueProviderClass;
+		
+		@SuppressWarnings("unchecked")
+		public <Q extends InfoHolder, T extends IssueProvider<Q>> T getIssueProvider() {
+			return (T)ModelUtil.instantiateObject(issueProviderClass);
+		}
 	}
 	
 	@Id @Getter @Setter @NotEmpty
@@ -52,4 +64,11 @@ public class Source {
 	
 	@Column @Getter @Setter
 	private GitHubInfo github;
+	
+	public List<Issue> getIssues() {
+		if(type == null) {
+			return Collections.emptyList();
+		}
+		return type.getIssueProvider().getIssues(github);
+	}
 }

@@ -15,8 +15,13 @@
  */
 package frostillicus.dtdl.app.model.util;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
@@ -81,5 +86,58 @@ public enum ModelUtil {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Attempts to instantiate an instance of the provided class using a
+	 * constructor matching the provided parameters. This is wrapped in an
+	 * doPrivileged block in order to facilitate use in a low-rights XPages
+	 * runtime.
+	 *
+	 * @param clazz
+	 *            the class to instantiate
+	 * @param params
+	 *            the parameters to pass to the constructor
+	 * @return a new object of the provided class
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T instantiateObject(final Class<T> clazz, final Object... params) {
+		return AccessController.doPrivileged((PrivilegedAction<T>) () -> {
+			for (Constructor<?> constructor : clazz.getDeclaredConstructors()) {
+				Class<?>[] constParams = constructor.getParameterTypes();
+				if (Modifier.isPublic(constructor.getModifiers()) && _instantiateDoClassesMatch(constParams, params)) {
+					try {
+						return (T) constructor.newInstance(params);
+					} catch (IllegalArgumentException e1) {
+						throw new RuntimeException(e1);
+					} catch (InstantiationException e2) {
+						throw new RuntimeException(e2);
+					} catch (IllegalAccessException e3) {
+						throw new RuntimeException(e3);
+					} catch (InvocationTargetException e4) {
+						throw new RuntimeException(e4);
+					}
+				}
+			}
+			throw new IllegalArgumentException(StringUtil.format("Could not find constructor on class {0} for params {1}", clazz, params == null ? "[]" //$NON-NLS-1$ //$NON-NLS-2$
+					: Arrays.asList(params)));
+		});
+	}
+
+	private static boolean _instantiateDoClassesMatch(final Class<?>[] classes, final Object[] params) {
+		if (classes == null && params != null) {
+			return false;
+		} else if (classes == null || params == null) {
+			return false;
+		} else if (classes.length != params.length) {
+			return false;
+		} else {
+			for (int i = 0; i < classes.length; i++) {
+				if (!classes[i].isInstance(params[i])) {
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 }

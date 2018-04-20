@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
 import org.darwino.jnosql.diana.driver.EntityConverter;
 import org.jnosql.artemis.Repository;
 import org.jnosql.artemis.document.DocumentEntityConverter;
@@ -37,6 +35,10 @@ import frostillicus.dtdl.app.model.ModelRepository;
 import frostillicus.dtdl.app.model.util.ModelUtil;
 import lombok.NonNull;
 
+/**
+ * HTTP service to provide access to JNoSQL model repositories and objects
+ * within the current application.
+ */
 public class ModelListService extends AbstractHttpService {
 	private final @NonNull Class<?> modelClass;
 	private final @NonNull Repository<Object, Object> repository;
@@ -68,8 +70,8 @@ public class ModelListService extends AbstractHttpService {
 	protected void doGet(HttpServiceContext context) throws Exception {
 		if(repository instanceof ModelRepository) {
 			context.emitJson(JsonObject.of(
-				"status", "success",
-				"entities", ((ModelRepository<?>)repository).findAll().stream()
+				"status", "success", //$NON-NLS-1$ //$NON-NLS-2$
+				"payload", ((ModelRepository<?>)repository).findAll().stream() //$NON-NLS-1$
 					.map(documentEntityConverter::toDocument)
 					.map(d -> EntityConverter.convert(d, true))
 					.collect(Collectors.toList())
@@ -92,8 +94,8 @@ public class ModelListService extends AbstractHttpService {
 		entity = this.repository.save(entity);
 
 		context.emitJson(JsonObject.of(
-			"status", "success",
-			"entity", entity.toString()
+			"status", "success", //$NON-NLS-1$ //$NON-NLS-2$
+			"payload", entity.toString() //$NON-NLS-1$
 		));
 	}
 }

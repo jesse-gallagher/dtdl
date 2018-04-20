@@ -23,16 +23,13 @@ import com.darwino.commons.services.rest.RestServiceBinder;
 import com.darwino.commons.services.rest.RestServiceFactory;
 import com.darwino.platform.DarwinoHttpConstants;
 
+import frostillicus.dtdl.app.model.services.IssueListService;
 import frostillicus.dtdl.app.model.services.ModelListService;
 import frostillicus.dtdl.app.model.services.ModelsService;
 
 
 /**
  * Application REST Services Factory.
- * 
- * This is the place where to define custom application services.
- * 
- * @author Philippe Riand
  */
 public class AppRestServiceFactory extends RestServiceFactory {
 	
@@ -51,6 +48,14 @@ public class AppRestServiceFactory extends RestServiceFactory {
 			@Override public HttpService createService(HttpServiceContext context, String[] parts) {
 				String modelName = parts[1];
 				return new ModelListService(modelName);
+			}
+		});
+		
+		binders.add(new RestServiceBinder("issues", null) { //$NON-NLS-1$
+			@Override
+			public HttpService createService(HttpServiceContext context, String[] parts) {
+				String sourceId = parts[1];
+				return new IssueListService(sourceId);
 			}
 		});
 	}	
