@@ -33,14 +33,7 @@ export class DTDLApp {
           <div class="row">
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
               <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <stencil-route-link url='/' class="nav-link">Home</stencil-route-link>
-                  </li>
-                  <li class="nav-item">
-                    <stencil-route-link url='/profile/foo' class="nav-link">Profile</stencil-route-link>
-                  </li>
-                </ul>
+                <app-navbar></app-navbar>
               </div>
             </nav>
 

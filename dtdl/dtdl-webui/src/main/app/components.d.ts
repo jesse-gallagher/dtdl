@@ -65,6 +65,39 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface AppNavbar {
+
+    }
+  }
+
+  interface HTMLAppNavbarElement extends StencilComponents.AppNavbar, HTMLStencilElement {}
+
+  var HTMLAppNavbarElement: {
+    prototype: HTMLAppNavbarElement;
+    new (): HTMLAppNavbarElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-navbar': HTMLAppNavbarElement;
+  }
+  interface ElementTagNameMap {
+    'app-navbar': HTMLAppNavbarElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-navbar': JSXElements.AppNavbarAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppNavbarAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface AppProfile {
       'match': MatchResults;
     }
