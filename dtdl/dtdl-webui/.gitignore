@@ -1,4 +1,6 @@
 dist/
+www/
+src/main/resources/DARWINO-INF/resources
 !www/favicon.ico
 
 *~
