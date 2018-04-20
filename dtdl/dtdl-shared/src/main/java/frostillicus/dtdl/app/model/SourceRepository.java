@@ -1,7 +1,10 @@
 package frostillicus.dtdl.app.model;
 
-import org.jnosql.artemis.Repository;
+import java.util.List;
 
-public interface SourceRepository extends Repository<Source, String> {
+import org.darwino.jnosql.artemis.extension.DarwinoRepository;
 
+public interface SourceRepository extends DarwinoRepository<Source, String>, ModelRepository<Source> {
+	@Override
+	List<Source> findAll();
 }

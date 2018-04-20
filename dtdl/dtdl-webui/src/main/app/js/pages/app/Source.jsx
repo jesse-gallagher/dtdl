@@ -9,6 +9,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Link, Prompt } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 
+import { MicroServices } from '@darwino/darwino';
 import {JsonDebug} from "@darwino/darwino-react";
 import { DocumentForm, ComputedField,
          renderField, renderRadioGroup, renderCheckbox, renderSelect, renderRichText, renderDatePicker } from '@darwino/darwino-react-bootstrap';
@@ -31,7 +32,18 @@ export class Source extends DocumentForm {
     };
 
     constructor(props) {
-        super(props)
+        super(props);
+
+        this.state = {
+            types: []
+        };
+
+        new MicroServices()
+            .name('SourceTypes')
+            .fetch()
+            .then((r) => {
+                this.setState({ types: r })
+            });
     }
 
     // Transform the generic attachment links to physical ones
@@ -67,12 +79,12 @@ export class Source extends DocumentForm {
     }
 
     getTypeOptions() {
-        return [{value: '', label: '- Select One -'}, ...Constants.SOURCE_TYPES.map(type => { return { value: type.id, label: type.name } })];
+        return [{value: '', label: '- Select One -'}, ...this.state.types.map(type => { return { value: type.id, label: type.name } })];
     }
 
     getTypeSubform() {
         switch(this.getFieldValue("type")) {
-            case "github":
+            case "GITHUB":
                 return (<TypeGitHub {...this.props} name=""/>);
             case "":
             case null:

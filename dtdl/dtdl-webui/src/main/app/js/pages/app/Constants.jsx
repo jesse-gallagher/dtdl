@@ -3,14 +3,7 @@
  */
 
 const Constants = {
-    DATABASE: "dtdl",
-
-    SOURCE_TYPES: [
-        {
-            id: "github",
-            name: "GitHub"
-        }
-    ]
+    DATABASE: "dtdl"
 }
 
 export default Constants
