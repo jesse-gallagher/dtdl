@@ -161,7 +161,7 @@
 							<copyrightYear>2018</copyrightYear>
 						</properties>
 						<mapping>
-							<tsx>SLASHSTAR_STYLE</tsx>
+							<tsx>TRIPLESLASH_STYLE</tsx>
 						</mapping>
 					</configuration>
 				</plugin>
