@@ -152,11 +152,17 @@
 				            <exclude>src/main/resources/**</exclude>
 							<exclude>**/build.properties</exclude>
 							<exclude>**/node_modules/**</exclude>
+							<exclude>**/components.d.ts</exclude>
+							<exclude>**/stencil.config.js</exclude>
+							<exclude>**/.editorconfig</exclude>
 						</excludes>
 						<properties>
 							<owner>Jesse Gallagher</owner>
 							<copyrightYear>2018</copyrightYear>
 						</properties>
+						<mapping>
+							<tsx>SLASHSTAR_STYLE</tsx>
+						</mapping>
 					</configuration>
 				</plugin>
 				
