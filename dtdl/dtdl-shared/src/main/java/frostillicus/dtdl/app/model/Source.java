@@ -15,6 +15,8 @@
  */
 package frostillicus.dtdl.app.model;
 
+import java.util.UUID;
+
 import javax.validation.constraints.NotEmpty;
 
 import org.jnosql.artemis.Column;
@@ -43,7 +45,7 @@ public class Source {
 	}
 	
 	@Id @Getter @Setter @NotEmpty
-	private String id;
+	private String id = UUID.randomUUID().toString();
 	
 	@Column @Getter @Setter
 	private Type type;
