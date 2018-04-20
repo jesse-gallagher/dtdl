@@ -32,7 +32,7 @@
 		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
 		<osgi.qualifier>${maven.build.timestamp}</osgi.qualifier>
 		
-		<jnosql-version>0.0.4-SNAPSHOT</jnosql-version>
+		<jnosql-version>0.0.6-SNAPSHOT</jnosql-version>
 		<weld-version>2.4.6.Final</weld-version>
 	</properties>
 
