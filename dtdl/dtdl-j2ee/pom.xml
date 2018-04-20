@@ -156,12 +156,11 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.4.10.RC0</version>
+				<version>9.4.8.v20171121</version>
 				<configuration>
 					<scanIntervalSeconds>3</scanIntervalSeconds>
 					<webApp>
 						<contextPath>/${project.build.finalName}</contextPath>
-						
 					</webApp>
 				</configuration>
 				<dependencies>
