@@ -98,39 +98,6 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface AppProfile {
-      'match': MatchResults;
-    }
-  }
-
-  interface HTMLAppProfileElement extends StencilComponents.AppProfile, HTMLStencilElement {}
-
-  var HTMLAppProfileElement: {
-    prototype: HTMLAppProfileElement;
-    new (): HTMLAppProfileElement;
-  };
-  interface HTMLElementTagNameMap {
-    'app-profile': HTMLAppProfileElement;
-  }
-  interface ElementTagNameMap {
-    'app-profile': HTMLAppProfileElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'app-profile': JSXElements.AppProfileAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface AppProfileAttributes extends HTMLAttributes {
-      'match'?: MatchResults;
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
     interface AppSourceList {
 
     }
@@ -156,6 +123,39 @@ declare global {
   namespace JSXElements {
     export interface AppSourceListAttributes extends HTMLAttributes {
 
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface AppSource {
+      'match': MatchResults;
+    }
+  }
+
+  interface HTMLAppSourceElement extends StencilComponents.AppSource, HTMLStencilElement {}
+
+  var HTMLAppSourceElement: {
+    prototype: HTMLAppSourceElement;
+    new (): HTMLAppSourceElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-source': HTMLAppSourceElement;
+  }
+  interface ElementTagNameMap {
+    'app-source': HTMLAppSourceElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-source': JSXElements.AppSourceAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppSourceAttributes extends HTMLAttributes {
+      'match'?: MatchResults;
     }
   }
 }

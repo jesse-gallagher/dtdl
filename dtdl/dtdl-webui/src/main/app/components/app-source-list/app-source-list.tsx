@@ -55,32 +55,22 @@ export class AppSourceList {
         <td>{s.type}</td>
         <td>{JSON.stringify(s)}</td>
         <td>
-          <button class="btn btn-info" onClick={() => this.showSource(s)}>Show</button>
+          <stencil-route-link url={`/sources/${s._id}`} class="btn btn-info">Show</stencil-route-link>
           <button class="btn btn-danger" onClick={() => this.deleteSource(s)}>Delete</button>
         </td>
       </tr>
     );
   }
 
-  showSource(source) {
-    const url = new URL("$darwino-app/models/Source/" + encodeURIComponent(source._id), this.httpBase);
-    fetch(url.toString(), { credentials: 'include' })
-      .then(r => r.json())
-      .then(json => {
-        alert(JSON.stringify(json))
-      })
-      .catch(e => {
-          console.error("Error while connecting to server", e);
-      })
-  }
-
   deleteSource(source) {
-    const url = new URL("$darwino-app/models/Source/" + encodeURIComponent(source._id), this.httpBase);
-    fetch(url.toString(), { method: 'DELETE', credentials: 'include' })
-      .then(r => this.refreshSources())
-      .catch(e => {
-          console.error("Error while connecting to server", e);
-      })
+    if(confirm("Delete this source?")) {
+      const url = new URL("$darwino-app/models/Source/" + encodeURIComponent(source._id), this.httpBase);
+      fetch(url.toString(), { method: 'DELETE', credentials: 'include' })
+        .then(r => this.refreshSources())
+        .catch(e => {
+            console.error("Error while connecting to server", e);
+        })
+    }
   }
 
   render() {
