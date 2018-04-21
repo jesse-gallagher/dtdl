@@ -17,8 +17,7 @@
 import { Component } from '@stencil/core';
 
 @Component({
-  tag: 'dtdl-app',
-  styleUrl: 'dtdl-app.css'
+  tag: 'dtdl-app'
 })
 export class DTDLApp {
 

@@ -18,8 +18,7 @@ import { Component } from '@stencil/core';
 
 
 @Component({
-  tag: 'app-home',
-  styleUrl: 'app-home.css'
+  tag: 'app-home'
 })
 export class AppHome {
 
@@ -29,12 +28,6 @@ export class AppHome {
         <p>
           Welcome to the Darwino To-Do List app
         </p>
-
-        <stencil-route-link url='/profile/stencil'>
-          <button>
-            Profile page
-          </button>
-        </stencil-route-link>
       </div>
     );
   }
