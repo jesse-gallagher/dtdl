@@ -25,6 +25,7 @@ import com.darwino.platform.DarwinoHttpConstants;
 
 import frostillicus.dtdl.app.model.services.IssueListService;
 import frostillicus.dtdl.app.model.services.ModelListService;
+import frostillicus.dtdl.app.model.services.ModelObjectService;
 import frostillicus.dtdl.app.model.services.ModelsService;
 
 
@@ -48,6 +49,14 @@ public class AppRestServiceFactory extends RestServiceFactory {
 			@Override public HttpService createService(HttpServiceContext context, String[] parts) {
 				String modelName = parts[1];
 				return new ModelListService(modelName);
+			}
+		});
+		binders.add(new RestServiceBinder("models", null, null) { //$NON-NLS-1$
+			@Override
+			public HttpService createService(HttpServiceContext context, String[] parts) {
+				String modelName = parts[1];
+				String id = parts[2];
+				return new ModelObjectService(modelName, id);
 			}
 		});
 		

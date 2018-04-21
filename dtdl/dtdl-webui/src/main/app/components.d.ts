@@ -131,6 +131,39 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface AppSourceList {
+
+    }
+  }
+
+  interface HTMLAppSourceListElement extends StencilComponents.AppSourceList, HTMLStencilElement {}
+
+  var HTMLAppSourceListElement: {
+    prototype: HTMLAppSourceListElement;
+    new (): HTMLAppSourceListElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-source-list': HTMLAppSourceListElement;
+  }
+  interface ElementTagNameMap {
+    'app-source-list': HTMLAppSourceListElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-source-list': JSXElements.AppSourceListAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppSourceListAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface DtdlApp {
 
     }

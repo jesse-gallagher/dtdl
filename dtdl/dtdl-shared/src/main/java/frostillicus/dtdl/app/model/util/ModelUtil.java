@@ -23,17 +23,23 @@ import java.lang.reflect.Type;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.darwino.jnosql.diana.driver.EntityConverter;
 import org.jnosql.artemis.Entity;
 import org.jnosql.artemis.Repository;
+import org.jnosql.artemis.document.DocumentEntityConverter;
+import org.jnosql.diana.api.document.Document;
+import org.jnosql.diana.api.document.DocumentEntity;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
+import com.darwino.commons.json.JsonObject;
 import com.darwino.commons.util.StringUtil;
 
 import frostillicus.dtdl.app.AppManifest;
@@ -139,5 +145,18 @@ public enum ModelUtil {
 			}
 			return true;
 		}
+	}
+	
+	public static JsonObject toJson(Object entity) {
+		DocumentEntityConverter documentEntityConverter = WeldContext.INSTANCE.getBean(DocumentEntityConverter.class);
+		DocumentEntity doc = documentEntityConverter.toDocument(entity);
+		return EntityConverter.convert(doc, true);
+	}
+	
+	public static <T> T toEntity(JsonObject json, Class<T> modelClass) {
+		DocumentEntityConverter documentEntityConverter = WeldContext.INSTANCE.getBean(DocumentEntityConverter.class);
+		List<Document> converter = EntityConverter.toDocuments(json);
+		DocumentEntity convertedEntity = DocumentEntity.of(modelClass.getSimpleName(), converter);
+		return documentEntityConverter.toEntity(modelClass, convertedEntity);
 	}
 }

@@ -8,10 +8,10 @@ export class AppNavBar {
     return (
         <ul class="nav flex-column">
             <li class="nav-item">
-            <stencil-route-link url='/' class="nav-link">Home</stencil-route-link>
+                <stencil-route-link url='/' class="nav-link" activeClass="active">Home</stencil-route-link>
             </li>
             <li class="nav-item">
-            <stencil-route-link url='/profile/foo' class="nav-link">Profile</stencil-route-link>
+                <stencil-route-link url='/sources' class="nav-link" activeClass="active">Sources</stencil-route-link>
             </li>
         </ul>
     );

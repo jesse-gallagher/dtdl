@@ -5,7 +5,8 @@ exports.config = {
       type: 'www',
       dir: 'src/main/resources/DARWINO-INF/resources'
     }
-  ]
+  ],
+  globalScript: 'src/main/app/global/context.ts'
 };
 
 exports.devServer = {

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -7,7 +8,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>dtdl-j2ee</artifactId>
-	
+
 	<packaging>war</packaging>
 	<name>Darwino To-Do List</name>
 
@@ -17,7 +18,7 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.darwino</groupId>
 			<artifactId>dwo-commons-runtime</artifactId>
@@ -40,26 +41,12 @@
 			<artifactId>dwo-jre-jdbc-drivers-postgresql</artifactId>
 			<version>${DARWINO_VERSION}</version>
 		</dependency>
-<!-- 		
 		<dependency>
-			<groupId>com.darwino</groupId>
-			<artifactId>dwo-jre-jdbc-drivers-db2</artifactId>
-			<version>${DARWINO_VERSION}</version>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.2</version>
 		</dependency>
- -->		
 
-<!-- For desktop SQLite tests 
-		<dependency>
-			<groupId>com.darwino</groupId>
-			<artifactId>dwo-jre-sqlite</artifactId>
-			<version>${DARWINO_VERSION}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.darwino</groupId>
-			<artifactId>dwo-jre-jsonstore-jdbc-sqlite</artifactId>
-			<version>${DARWINO_VERSION}</version>
-		</dependency>
- -->
 
 		<dependency>
 			<groupId>com.darwino</groupId>
@@ -88,7 +75,7 @@
 			<artifactId>dtdl-webui</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
@@ -102,7 +89,7 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -144,7 +131,7 @@
 	</dependencyManagement>
 
 	<build>
-        <finalName>dtdl</finalName>
+		<finalName>dtdl</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -173,5 +160,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
