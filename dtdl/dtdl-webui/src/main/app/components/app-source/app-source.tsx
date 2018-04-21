@@ -64,6 +64,38 @@ export class AppSource {
           console.log(e);
       }
   }
+  
+  updateSource(e) {
+      e.preventDefault();
+      try {
+          const url = new URL("$darwino-app/models/Source/" + encodeURIComponent(this.match.params.id), this.httpBase);
+          fetch(url.toString(), {
+              method: 'PUT',
+              body: JSON.stringify(this.source),
+              credentials: 'include'
+          })
+              .then(json => {
+                  alert("Updated source");
+                  
+                  this.refreshSource();
+              })
+              .catch(e => {
+                  console.error("Error while connecting to server", e);
+              })
+      } catch(e) {
+          console.log(e);
+      }
+  }
+  
+  handleSourceFieldUpdate(prop:string, e) {
+      const newObj = {};
+      newObj[prop] = e.target.value;
+      this.source = {
+         ...this.source,
+         ...newObj
+      };
+      console.log(this.source);
+  }
 
   renderIssues() {
     if(this.issues == null) {
@@ -83,8 +115,26 @@ export class AppSource {
     }
     return (
         <div>
-            <h1>{this.source._id}</h1>
-            <h3>{this.source.type}</h3>
+            <fieldset>
+                <legend>Source</legend>
+                
+                <form onSubmit={(e) => this.updateSource(e)}>
+                    <div class="form-group">
+                        <label htmlFor="sourceTitle">Title</label>
+                        <input type="text" class="form-control" id="sourceTitle" value={this.source.title}
+                            onInput={(e) => this.handleSourceFieldUpdate('title', e)}
+                            onChange={(e) => this.handleSourceFieldUpdate('title', e)} />
+                    </div>
+                    <div class="form-group">
+                        <label htmlFor="sourceType">Type</label>
+                        <input type="text" class="form-control" id="sourceType" value={this.source.type}
+                            onInput={(e) => this.handleSourceFieldUpdate('type', e)}
+                            onChange={(e) => this.handleSourceFieldUpdate('type', e)} />
+                    </div>
+                        
+                    <button class="btn btn-primary" onClick={(e) => this.updateSource(e)}>Update</button>
+                </form>
+            </fieldset>
 
             <table>
                 <thead>

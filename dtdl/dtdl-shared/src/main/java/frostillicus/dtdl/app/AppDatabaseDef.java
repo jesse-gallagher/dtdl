@@ -28,7 +28,7 @@ import com.darwino.jsonstore.meta._Database;
  */
 public class AppDatabaseDef extends DatabaseFactoryImpl {
 
-	public static final int DATABASE_VERSION	= 1;
+	public static final int DATABASE_VERSION	= 4;
 	public static final String DATABASE_NAME	= "dtdl"; //$NON-NLS-1$
 	
     public static final String[] DATABASES = new String[] {
@@ -70,33 +70,6 @@ public class AppDatabaseDef extends DatabaseFactoryImpl {
 		_Database db = new _Database(DATABASE_NAME, "Darwino To-Do List", DATABASE_VERSION); //$NON-NLS-1$
 
 		db.setReplicationEnabled(true);
-		
-		// Document base security
-//		db.setDocumentSecurity(Database.DOCSEC_INCLUDE);
-		
-		// Instances are only available with the enterprise edition
-//		if(Lic.isEnterpriseEdition()) {
-//			db.setInstanceEnabled(true);
-//		}
-		
-		// Customize the default stores, if desired...
-//		{
-//			_Store _def = db.getStore(Database.STORE_DEFAULT);
-//			_def.setFtSearchEnabled(true);
-//			_FtSearch ft = (_FtSearch) _def.setFTSearch(new _FtSearch());
-//			ft.setFields("$");
-//		}
-
-		// Store...
-//		{
-//			_Store store = db.addStore("MyStore");
-//			store.setLabel("My Store");
-//			store.setFtSearchEnabled(true);
-//			
-//			// Search the whole document (all fields)
-//			_FtSearch ft = (_FtSearch) store.setFTSearch(new _FtSearch());
-//			ft.setFields("$");
-//		}
 
 		return db;
 	}

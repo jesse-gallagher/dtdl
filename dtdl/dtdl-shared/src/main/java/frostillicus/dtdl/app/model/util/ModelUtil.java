@@ -159,4 +159,11 @@ public enum ModelUtil {
 		DocumentEntity convertedEntity = DocumentEntity.of(modelClass.getSimpleName(), converter);
 		return documentEntityConverter.toEntity(modelClass, convertedEntity);
 	}
+	
+	public static void updateEntity(Object entity, JsonObject json) {
+		DocumentEntityConverter documentEntityConverter = WeldContext.INSTANCE.getBean(DocumentEntityConverter.class);
+		List<Document> converter = EntityConverter.toDocuments(json);
+		DocumentEntity convertedEntity = DocumentEntity.of(entity.getClass().getSimpleName(), converter);
+		documentEntityConverter.toEntity(entity, convertedEntity);
+	}
 }

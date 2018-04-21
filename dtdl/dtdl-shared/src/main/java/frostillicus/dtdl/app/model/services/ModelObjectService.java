@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import org.jnosql.artemis.Repository;
 
+import com.darwino.commons.json.JsonObject;
 import com.darwino.commons.services.AbstractHttpService;
 import com.darwino.commons.services.HttpServiceContext;
 import com.darwino.commons.util.StringUtil;
@@ -67,5 +68,14 @@ public class ModelObjectService extends AbstractHttpService {
 	protected void doDelete(HttpServiceContext context) throws Exception {
 		repository.deleteById(id);
 		ok(context, id);
+	}
+	
+	@Override
+	protected void doPut(HttpServiceContext context) throws Exception {
+		Object entity = repository.findById(id).orElseThrow(() -> new RuntimeException("Could not find " + modelClass.getSimpleName() + " for ID " + id)); //$NON-NLS-1$ //$NON-NLS-2$
+		JsonObject json = (JsonObject)context.getContentAsJson();
+		ModelUtil.updateEntity(entity, json);
+		repository.save(entity);
+		ok(context, ModelUtil.toJson(entity));
 	}
 }

@@ -60,6 +60,9 @@ public class Source {
 	private String id = UUID.randomUUID().toString();
 	
 	@Column @Getter @Setter
+	private String title;
+	
+	@Column @Getter @Setter
 	private Type type;
 	
 	@Column @Getter @Setter
