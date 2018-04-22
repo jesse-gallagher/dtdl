@@ -83,7 +83,7 @@ export class AppSourceIssues {
     }
     return (
         <div>
-            <table>
+            <table class="table table-striped table-condensed table-bordered">
                 <thead>
                     <tr>
                         <th>Title</th>
