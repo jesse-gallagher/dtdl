@@ -18,6 +18,8 @@ package frostillicus.dtdl.app.model.services;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.enterprise.inject.Instance;
+
 import org.jnosql.artemis.Repository;
 
 import com.darwino.commons.json.JsonObject;
@@ -38,8 +40,9 @@ import static frostillicus.dtdl.app.model.services.ServiceUtil.ok;
 public class ModelListService extends AbstractHttpService {
 	private final @NonNull Class<?> modelClass;
 	private final @NonNull Repository<Object, Object> repository;
+	private final @NonNull Instance<Object> cdiInstance;
 
-	public ModelListService(String modelName) {
+	public ModelListService(Instance<Object> cdiInstance, String modelName) {
 		if(StringUtil.isEmpty(modelName)) {
 			throw new IllegalArgumentException("modelName cannot be empty"); //$NON-NLS-1$
 		}
@@ -51,18 +54,20 @@ public class ModelListService extends AbstractHttpService {
 		this.modelClass = modelClass.get();
 		
 		@SuppressWarnings("unchecked")
-		Repository<Object, Object> repository = (Repository<Object, Object>)ModelUtil.getRepository(modelClass.get());
+		Repository<Object, Object> repository = (Repository<Object, Object>)ModelUtil.getRepository(cdiInstance, modelClass.get());
 		if(repository == null) {
 			throw new NullPointerException("Could not find repository for class " + modelClass.get().getName()); //$NON-NLS-1$
 		}
 		this.repository = repository;
+		
+		this.cdiInstance = cdiInstance;
 	}
 
 	@Override
 	protected void doGet(HttpServiceContext context) throws Exception {
 		if(repository instanceof ModelRepository) {
 			ok(context, ((ModelRepository<?>)repository).findAll().stream()
-				.map(ModelUtil::toJson)
+				.map(entity -> ModelUtil.toJson(cdiInstance, entity))
 				.collect(Collectors.toList())
 			);
 		} else {
@@ -76,7 +81,7 @@ public class ModelListService extends AbstractHttpService {
 	@Override
 	protected void doPost(HttpServiceContext context) throws Exception {
 		Object newModel = context.getContentAsJson();
-		Object entity = ModelUtil.toEntity((JsonObject)newModel, this.modelClass);
+		Object entity = ModelUtil.toEntity(cdiInstance, (JsonObject)newModel, this.modelClass);
 		entity = this.repository.save(entity);
 		
 		ok(context, entity.toString());

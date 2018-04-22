@@ -17,6 +17,8 @@ package frostillicus.dtdl.app.model.services;
 
 import java.util.Optional;
 
+import javax.enterprise.inject.Instance;
+
 import org.jnosql.artemis.Repository;
 
 import com.darwino.commons.json.JsonObject;
@@ -33,8 +35,9 @@ public class ModelObjectService extends AbstractHttpService {
 	private final @NonNull Class<?> modelClass;
 	private final @NonNull Repository<Object, Object> repository;
 	private final @NonNull String id;
+	private final @NonNull Instance<Object> cdiInstance;
 
-	public ModelObjectService(String modelName, String id) {
+	public ModelObjectService(Instance<Object> cdiInstance, String modelName, String id) {
 		if(StringUtil.isEmpty(modelName)) {
 			throw new IllegalArgumentException("modelName cannot be empty"); //$NON-NLS-1$
 		}
@@ -49,19 +52,20 @@ public class ModelObjectService extends AbstractHttpService {
 		this.modelClass = modelClass.get();
 		
 		@SuppressWarnings("unchecked")
-		Repository<Object, Object> repository = (Repository<Object, Object>)ModelUtil.getRepository(modelClass.get());
+		Repository<Object, Object> repository = (Repository<Object, Object>)ModelUtil.getRepository(cdiInstance, modelClass.get());
 		if(repository == null) {
 			throw new NullPointerException("Could not find repository for class " + modelClass.get().getName()); //$NON-NLS-1$
 		}
 		this.repository = repository;
 		
 		this.id = id;
+		this.cdiInstance = cdiInstance;
 	}
 	
 	@Override
 	protected void doGet(HttpServiceContext context) throws Exception {
 		Object entity = repository.findById(id).orElseThrow(() -> new RuntimeException("Could not find " + modelClass.getSimpleName() + " for ID " + id)); //$NON-NLS-1$ //$NON-NLS-2$
-		ok(context, ModelUtil.toJson(entity));
+		ok(context, ModelUtil.toJson(cdiInstance, entity));
 	}
 	
 	@Override
@@ -74,8 +78,8 @@ public class ModelObjectService extends AbstractHttpService {
 	protected void doPut(HttpServiceContext context) throws Exception {
 		Object entity = repository.findById(id).orElseThrow(() -> new RuntimeException("Could not find " + modelClass.getSimpleName() + " for ID " + id)); //$NON-NLS-1$ //$NON-NLS-2$
 		JsonObject json = (JsonObject)context.getContentAsJson();
-		ModelUtil.updateEntity(entity, json);
+		ModelUtil.updateEntity(cdiInstance, entity, json);
 		repository.save(entity);
-		ok(context, ModelUtil.toJson(entity));
+		ok(context, ModelUtil.toJson(cdiInstance, entity));
 	}
 }

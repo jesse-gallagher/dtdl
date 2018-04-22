@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.enterprise.inject.Instance;
+
 import org.darwino.jnosql.diana.driver.EntityConverter;
 import org.jnosql.artemis.Entity;
 import org.jnosql.artemis.Repository;
@@ -43,7 +45,6 @@ import com.darwino.commons.json.JsonObject;
 import com.darwino.commons.util.StringUtil;
 
 import frostillicus.dtdl.app.AppManifest;
-import frostillicus.dtdl.app.WeldContext;
 
 public enum ModelUtil {
 	;
@@ -75,7 +76,7 @@ public enum ModelUtil {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static synchronized <C, T extends Repository<C, ?>> T getRepository(Class<C> modelClass) {
+	public static synchronized <C, T extends Repository<C, ?>> T getRepository(Instance<Object> cdiInstance, Class<C> modelClass) {
 		if(repositoryClasses == null) {
 			repositoryClasses = (Set<Class<? extends Repository<?, ?>>>)(Set<?>)reflections.getSubTypesOf(Repository.class);
 		}
@@ -86,7 +87,7 @@ public enum ModelUtil {
 				if(type instanceof ParameterizedType) {
 					ParameterizedType pt = (ParameterizedType)type;
 					if(Arrays.asList(pt.getActualTypeArguments()).contains(modelClass)) {
-						return (T) WeldContext.INSTANCE.getBean(clazz);
+						return (T) cdiInstance.select(clazz).get();
 					}
 				}
 			}
@@ -147,21 +148,21 @@ public enum ModelUtil {
 		}
 	}
 	
-	public static JsonObject toJson(Object entity) {
-		DocumentEntityConverter documentEntityConverter = WeldContext.INSTANCE.getBean(DocumentEntityConverter.class);
+	public static JsonObject toJson(Instance<Object> cdiInstance, Object entity) {
+		DocumentEntityConverter documentEntityConverter = cdiInstance.select(DocumentEntityConverter.class).get();
 		DocumentEntity doc = documentEntityConverter.toDocument(entity);
 		return EntityConverter.convert(doc, true);
 	}
 	
-	public static <T> T toEntity(JsonObject json, Class<T> modelClass) {
-		DocumentEntityConverter documentEntityConverter = WeldContext.INSTANCE.getBean(DocumentEntityConverter.class);
+	public static <T> T toEntity(Instance<Object> cdiInstance, JsonObject json, Class<T> modelClass) {
+		DocumentEntityConverter documentEntityConverter = cdiInstance.select(DocumentEntityConverter.class).get();
 		List<Document> converter = EntityConverter.toDocuments(json);
 		DocumentEntity convertedEntity = DocumentEntity.of(modelClass.getSimpleName(), converter);
 		return documentEntityConverter.toEntity(modelClass, convertedEntity);
 	}
 	
-	public static void updateEntity(Object entity, JsonObject json) {
-		DocumentEntityConverter documentEntityConverter = WeldContext.INSTANCE.getBean(DocumentEntityConverter.class);
+	public static void updateEntity(Instance<Object> cdiInstance, Object entity, JsonObject json) {
+		DocumentEntityConverter documentEntityConverter = cdiInstance.select(DocumentEntityConverter.class).get();
 		List<Document> converter = EntityConverter.toDocuments(json);
 		DocumentEntity convertedEntity = DocumentEntity.of(entity.getClass().getSimpleName(), converter);
 		documentEntityConverter.toEntity(entity, convertedEntity);

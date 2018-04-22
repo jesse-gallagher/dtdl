@@ -17,6 +17,9 @@ package frostillicus.dtdl.app.model.services;
 
 import java.util.stream.Collectors;
 
+import javax.enterprise.inject.Instance;
+import javax.validation.constraints.NotNull;
+
 import org.darwino.jnosql.diana.driver.EntityConverter;
 import org.jnosql.artemis.Repository;
 import org.jnosql.artemis.document.DocumentEntityConverter;
@@ -33,13 +36,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class IssueListService extends AbstractHttpService {
 	
-	private final String sourceId;
-	
+	private final @NotNull Instance<Object> cdiInstance;
+	private final @NotNull String sourceId;
 	
 	@Override
 	protected void doGet(HttpServiceContext context) throws Exception {
 		@SuppressWarnings("unchecked")
-		Repository<Source, Object> repository = (Repository<Source, Object>)ModelUtil.getRepository(Source.class);
+		Repository<Source, Object> repository = (Repository<Source, Object>)ModelUtil.getRepository(cdiInstance, Source.class);
 		if(repository == null) {
 			throw new NullPointerException("Could not find repository for class " + Source.class.getName()); //$NON-NLS-1$
 		}
