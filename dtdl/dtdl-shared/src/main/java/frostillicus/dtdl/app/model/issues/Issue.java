@@ -25,8 +25,14 @@ import lombok.NoArgsConstructor;
 @Entity @Data
 @AllArgsConstructor @NoArgsConstructor
 public class Issue {
+	public enum Status {
+		OPEN, CLOSED
+	}
+	
 	@Column
 	private String title;
 	@Column
 	private String url;
+	@Column
+	private Status status;
 }
