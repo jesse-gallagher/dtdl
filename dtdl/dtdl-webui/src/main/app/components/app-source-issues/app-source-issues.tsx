@@ -18,9 +18,9 @@ import { Component, Prop, State } from '@stencil/core';
 import { MatchResults } from '@stencil/router';
 
 @Component({
-  tag: 'app-source'
+  tag: 'app-source-issues'
 })
-export class AppSource {
+export class AppSourceIssues {
   @Prop({ context: 'httpBase' }) private httpBase: string;
   @Prop() match: MatchResults;
 
@@ -33,7 +33,7 @@ export class AppSource {
 
   refreshSource() {
     try {
-      const url = new URL("$darwino-app/models/Source/" + encodeURIComponent(this.match.params.id), this.httpBase);
+      const url = new URL("$darwino-app/models/Source/" + encodeURIComponent(this.match.params.sourceId), this.httpBase);
       fetch(url.toString(), { credentials: 'include' })
         .then(r => r.json())
         .then(json => {
@@ -51,7 +51,7 @@ export class AppSource {
 
   refreshIssues() {
     try {
-        const url = new URL("$darwino-app/issues/" + encodeURIComponent(this.match.params.id), this.httpBase);
+        const url = new URL("$darwino-app/issues/" + encodeURIComponent(this.match.params.sourceId), this.httpBase);
         fetch(url.toString(), { credentials: 'include' })
           .then(r => r.json())
           .then(json => {
@@ -63,38 +63,6 @@ export class AppSource {
       } catch(e) {
           console.log(e);
       }
-  }
-  
-  updateSource(e) {
-      e.preventDefault();
-      try {
-          const url = new URL("$darwino-app/models/Source/" + encodeURIComponent(this.match.params.id), this.httpBase);
-          fetch(url.toString(), {
-              method: 'PUT',
-              body: JSON.stringify(this.source),
-              credentials: 'include'
-          })
-              .then(json => {
-                  alert("Updated source");
-                  
-                  this.refreshSource();
-              })
-              .catch(e => {
-                  console.error("Error while connecting to server", e);
-              })
-      } catch(e) {
-          console.log(e);
-      }
-  }
-  
-  handleSourceFieldUpdate(prop:string, e) {
-      const newObj = {};
-      newObj[prop] = e.target.value;
-      this.source = {
-         ...this.source,
-         ...newObj
-      };
-      console.log(this.source);
   }
 
   renderIssues() {
@@ -115,27 +83,6 @@ export class AppSource {
     }
     return (
         <div>
-            <fieldset>
-                <legend>Source</legend>
-                
-                <form onSubmit={(e) => this.updateSource(e)}>
-                    <div class="form-group">
-                        <label htmlFor="sourceTitle">Title</label>
-                        <input type="text" class="form-control" id="sourceTitle" value={this.source.title}
-                            onInput={(e) => this.handleSourceFieldUpdate('title', e)}
-                            onChange={(e) => this.handleSourceFieldUpdate('title', e)} />
-                    </div>
-                    <div class="form-group">
-                        <label htmlFor="sourceType">Type</label>
-                        <input type="text" class="form-control" id="sourceType" value={this.source.type}
-                            onInput={(e) => this.handleSourceFieldUpdate('type', e)}
-                            onChange={(e) => this.handleSourceFieldUpdate('type', e)} />
-                    </div>
-                        
-                    <button class="btn btn-primary" onClick={(e) => this.updateSource(e)}>Update</button>
-                </form>
-            </fieldset>
-
             <table>
                 <thead>
                     <tr>

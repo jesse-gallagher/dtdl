@@ -32,6 +32,39 @@ import {
 declare global {
 
   namespace StencilComponents {
+    interface AppEditSource {
+      'match': MatchResults;
+    }
+  }
+
+  interface HTMLAppEditSourceElement extends StencilComponents.AppEditSource, HTMLStencilElement {}
+
+  var HTMLAppEditSourceElement: {
+    prototype: HTMLAppEditSourceElement;
+    new (): HTMLAppEditSourceElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-edit-source': HTMLAppEditSourceElement;
+  }
+  interface ElementTagNameMap {
+    'app-edit-source': HTMLAppEditSourceElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-edit-source': JSXElements.AppEditSourceAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppEditSourceAttributes extends HTMLAttributes {
+      'match'?: MatchResults;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface AppHome {
 
     }
@@ -98,6 +131,39 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface AppSourceIssues {
+      'match': MatchResults;
+    }
+  }
+
+  interface HTMLAppSourceIssuesElement extends StencilComponents.AppSourceIssues, HTMLStencilElement {}
+
+  var HTMLAppSourceIssuesElement: {
+    prototype: HTMLAppSourceIssuesElement;
+    new (): HTMLAppSourceIssuesElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-source-issues': HTMLAppSourceIssuesElement;
+  }
+  interface ElementTagNameMap {
+    'app-source-issues': HTMLAppSourceIssuesElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-source-issues': JSXElements.AppSourceIssuesAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppSourceIssuesAttributes extends HTMLAttributes {
+      'match'?: MatchResults;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface AppSourceList {
 
     }
@@ -123,39 +189,6 @@ declare global {
   namespace JSXElements {
     export interface AppSourceListAttributes extends HTMLAttributes {
 
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
-    interface AppSource {
-      'match': MatchResults;
-    }
-  }
-
-  interface HTMLAppSourceElement extends StencilComponents.AppSource, HTMLStencilElement {}
-
-  var HTMLAppSourceElement: {
-    prototype: HTMLAppSourceElement;
-    new (): HTMLAppSourceElement;
-  };
-  interface HTMLElementTagNameMap {
-    'app-source': HTMLAppSourceElement;
-  }
-  interface ElementTagNameMap {
-    'app-source': HTMLAppSourceElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'app-source': JSXElements.AppSourceAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface AppSourceAttributes extends HTMLAttributes {
-      'match'?: MatchResults;
     }
   }
 }

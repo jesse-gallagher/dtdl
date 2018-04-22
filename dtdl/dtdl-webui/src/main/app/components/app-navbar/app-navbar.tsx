@@ -14,22 +14,65 @@
 /// limitations under the License.
 ///
 
-import { Component } from '@stencil/core';
+import { Component, State, Prop } from '@stencil/core';
 
 @Component({
   tag: 'app-navbar'
 })
 export class AppNavBar {
-  render() {
-    return (
-        <ul class="nav flex-column">
+    // TODO consolidate into a parent class
+    @Prop({ context: 'httpBase' }) private httpBase: string;
+
+    @State() private sources: Array<any>;
+
+    componentDidLoad() {
+      this.refreshSources();
+    }
+
+    refreshSources() {
+      try {
+        const url = new URL("$darwino-app/models/Source", this.httpBase);
+        fetch(url.toString(), { credentials: 'include' })
+          .then(r => r.json())
+          .then(json => {
+            this.sources = json.payload;
+          })
+          .catch(e => {
+              console.error("Error while connecting to server", e);
+          })
+      } catch(e) {
+          console.log(e);
+      }
+    }
+    
+    renderSources() {
+        if(this.sources == null) {
+            return [];
+        }
+        return this.sources.map((source) =>
             <li class="nav-item">
-                <stencil-route-link url='/' class="nav-link" activeClass="active">Home</stencil-route-link>
+                <stencil-route-link url={`/issues/${source._id}`} class="nav-link" activeClass="active">{source.title}</stencil-route-link>
             </li>
-            <li class="nav-item">
-                <stencil-route-link url='/sources' class="nav-link" activeClass="active">Sources</stencil-route-link>
-            </li>
-        </ul>
-    );
-  }
+        )
+    }
+
+    render() {
+        return (
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <stencil-route-link url='/' class="nav-link" activeClass="active">Home</stencil-route-link>
+                </li>
+                <li class="nav-item">
+                    <hr />
+                </li>
+                {this.renderSources()}
+                <li class="nav-item">
+                    <hr />
+                </li>
+                <li class="nav-item">
+                    <stencil-route-link url='/sources' class="nav-link" activeClass="active">Sources</stencil-route-link>
+                </li>
+            </ul>
+        );
+    }
 }

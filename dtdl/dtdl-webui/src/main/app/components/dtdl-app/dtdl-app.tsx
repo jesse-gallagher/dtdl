@@ -16,37 +16,39 @@
 
 import { Component } from '@stencil/core';
 
-@Component({
-  tag: 'dtdl-app'
-})
+@Component( {
+    tag: 'dtdl-app'
+} )
 export class DTDLApp {
 
-  render() {
-    return (
-      <div>
-        <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-          <stencil-route-link url='/' class="navbar-brand col-sm-3 col-md-2 mr-0">Darwino To-Do List</stencil-route-link>
-        </nav>
+    render() {
+        return (
+            <div>
+                <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+                    <stencil-route-link url='/' class="navbar-brand col-sm-3 col-md-2 mr-0">Darwino To-Do List</stencil-route-link>
+                </nav>
 
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-              <div class="sidebar-sticky">
-                <app-navbar></app-navbar>
-              </div>
-            </nav>
+                <div class="container-fluid">
+                    <div class="row">
+                        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                            <div class="sidebar-sticky">
+                                <app-navbar></app-navbar>
+                            </div>
+                        </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-              <stencil-router>
-                <stencil-route url='/' component='app-home' exact={true}/>
+                        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                            <stencil-router>
+                                <stencil-route url='/' component='app-home' exact={true} />
 
-                <stencil-route url='/sources' component='app-source-list' exact={true}/>
-                <stencil-route url='/sources/:id' component='app-source'/>
-              </stencil-router>
-            </main>
-          </div>
-        </div>
-      </div>
-    );
-  }
+                                <stencil-route url='/sources' component='app-source-list' exact={true} />
+                                <stencil-route url='/sources/:id' component='app-edit-source' />
+
+                                <stencil-route url='/issues/:sourceId' component='app-source-issues'/>
+                            </stencil-router>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
