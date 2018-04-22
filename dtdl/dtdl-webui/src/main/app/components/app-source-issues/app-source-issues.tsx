@@ -26,6 +26,7 @@ export class AppSourceIssues {
 
     @State() private source: any;
     @State() private issues: Array<any>;
+    @State() private updating: boolean;
 
     componentDidLoad() {
         this.refreshSource();
@@ -56,10 +57,12 @@ export class AppSourceIssues {
 
     refreshIssues() {
         try {
+            this.updating = true;
             const url = new URL("$darwino-app/issues/" + encodeURIComponent(this.match.params.sourceId), this.httpBase);
             fetch(url.toString(), { credentials: 'include' })
                 .then(r => r.json())
                 .then(json => {
+                    this.updating = false;
                     this.issues = json.payload;
                 })
                 .catch(e => {
@@ -71,14 +74,16 @@ export class AppSourceIssues {
     }
 
     renderIssues() {
+        if(this.updating) {
+            return <tr><td colSpan={2} style={{textAlign: 'center'}}><div class="loader" style={{margin: '0 auto'}}></div></td></tr>
+        }
         if (this.issues == null) {
             return [];
         }
         return this.issues.map(issue =>
             <tr>
-                <td>{issue.title}</td>
+                <td><a href={issue.url} target="_blank">{issue.title}</a></td>
                 <td>{issue.status}</td>
-                <td><a href={issue.url} target="_blank">{issue.url}</a></td>
             </tr>
         );
     }
@@ -94,7 +99,6 @@ export class AppSourceIssues {
                         <tr>
                             <th>Title</th>
                             <th>Status</th>
-                            <th>Link</th>
                         </tr>
                     </thead>
                     <tbody>

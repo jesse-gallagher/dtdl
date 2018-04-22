@@ -102,7 +102,6 @@ export class AppEditSource {
             ...this.source,
             ...newObj
         };
-        console.debug("New source:", this.source);
     }
     
     handleGitHubFieldUpdate(prop: string, e) {
@@ -116,7 +115,6 @@ export class AppEditSource {
             ...this.source,
             github: github
         };
-        console.debug("New source:", this.source);
     }
 
     render() {
