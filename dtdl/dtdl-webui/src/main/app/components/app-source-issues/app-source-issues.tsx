@@ -94,6 +94,8 @@ export class AppSourceIssues {
         }
         return (
             <div>
+                <h2>{this.source.title}</h2>
+                
                 <table class="table table-striped table-sm table-bordered">
                     <thead>
                         <tr>
