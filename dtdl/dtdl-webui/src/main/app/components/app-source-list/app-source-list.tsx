@@ -51,9 +51,8 @@ export class AppSourceList {
         }
         return this.sources.map(s =>
             <tr>
-                <td>{s._id}</td>
+                <td>{s.title}</td>
                 <td>{s.type}</td>
-                <td>{JSON.stringify(s)}</td>
                 <td>
                     <stencil-route-link url={`/sources/${s._id}`} class="btn btn-info">Show</stencil-route-link>
                     <button class="btn btn-danger" onClick={() => this.deleteSource(s)}>Delete</button>
@@ -76,12 +75,11 @@ export class AppSourceList {
     render() {
         return (
             <div>
-                <table>
+                <table class="table table-striped table-sm table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Name</th>
                             <th>Type</th>
-                            <th>JSON</th>
                             <th></th>
                         </tr>
                     </thead>
