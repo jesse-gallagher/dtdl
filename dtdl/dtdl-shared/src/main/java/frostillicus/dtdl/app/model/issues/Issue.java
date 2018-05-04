@@ -51,4 +51,6 @@ public class Issue {
 	private List<String> tags;
 	@Column
 	private Version version;
+	@Column
+	private String body;
 }

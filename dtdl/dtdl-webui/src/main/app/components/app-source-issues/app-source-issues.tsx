@@ -88,12 +88,29 @@ export class AppSourceIssues {
             
             return (<tr>
                 <td>{issue.id}</td>
-                <td><a href={issue.url} target="_blank">{issue.title}</a></td>
+                <td>
+                    {this.renderIssueBody(issue)}
+                    <a href={issue.url} target="_blank">{issue.title}</a>
+                </td>
                 <td>{issue.status}</td>
                 <td>{tags.join(', ')}</td>
                 <td>{version}</td>
             </tr>)
         });
+    }
+    
+    renderIssueBody(issue:any):any {
+        const id = issue.url.replace(/[^a-zA-Z0-9]*/g, "");
+        if(issue.body) {
+            return (
+                <div>
+                    <button data-toggle='modal' data-target={'#'+id+'_modal_modal'} class='float-right btn btn-info btn-sm'>Show</button>
+                    <bs-modal id={id+'_modal'} modalHTML={issue.body}></bs-modal>
+                </div>
+            );
+        } else {
+            return null;
+        }
     }
 
     render() {

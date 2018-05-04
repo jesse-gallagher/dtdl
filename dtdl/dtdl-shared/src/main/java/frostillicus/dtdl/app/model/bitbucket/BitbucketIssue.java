@@ -60,4 +60,5 @@ public class BitbucketIssue {
 	@Column("resource_uri") private String resourceUri;
 	@Column("is_spam") private boolean spam;
 	@Column private Metadata metadata;
+	@Column private String content;
 }

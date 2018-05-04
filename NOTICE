@@ -11,3 +11,5 @@ The project contains the following 3rd-party code:
 - org.eclipse.egit.github.core from the Eclipse EGit Github Connector, which is licensed under the Eclipse Public License 1.0 and available from https://github.com/eclipse/egit-github
 - JNoSQL, which is licensed under the Eclipse Public License 1.0 and available from http://www.jnosql.org
 - The Darwino JNoSQL driver, which is licensed under the Apache License 2.0 and available from https://github.com/darwino/diana-driver
+- commonmark-java, which is copyright Atlassian and others, licensed under a BSD 2-clause license, and available from https://github.com/atlassian/commonmark-java
+- Bootstrap 4.1.1, which is licensed under the MIT license and available from https://getbootstrap.com
