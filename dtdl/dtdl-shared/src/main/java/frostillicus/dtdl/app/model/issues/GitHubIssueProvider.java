@@ -35,7 +35,7 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 	
 	@Override
 	@SneakyThrows
-	protected List<Issue> _getIssues(GitHubInfo info) {
+	protected List<Issue> doGetIssues(GitHubInfo info) {
 		GitHubClient client = new GitHubClient();
 		client.setOAuth2Token(info.getToken());
 		

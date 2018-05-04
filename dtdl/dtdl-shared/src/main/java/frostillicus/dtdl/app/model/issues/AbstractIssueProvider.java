@@ -28,7 +28,7 @@ public abstract class AbstractIssueProvider<T extends InfoHolder> {
 	private Map<T, List<Issue>> CACHE = Collections.synchronizedMap(new PassiveExpiringMap<>(30, TimeUnit.SECONDS));
 	
 	public final List<Issue> getIssues(T info) {
-		return CACHE.computeIfAbsent(info, this::_getIssues);
+		return CACHE.computeIfAbsent(info, this::doGetIssues);
 	}
-	protected abstract List<Issue> _getIssues(T info);
+	protected abstract List<Issue> doGetIssues(T info);
 }

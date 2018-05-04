@@ -48,7 +48,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 	private HtmlRenderer markdownHtml = HtmlRenderer.builder().build();
 
 	@Override
-	protected List<Issue> _getIssues(BitbucketInfo info) {
+	protected List<Issue> doGetIssues(BitbucketInfo info) {
 		HttpClient client = getBitbucketClient(info);
 		
 		String repository = StringUtil.toString(info.getRepository());
