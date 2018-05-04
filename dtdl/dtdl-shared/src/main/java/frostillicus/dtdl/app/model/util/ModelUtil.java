@@ -169,14 +169,4 @@ public enum ModelUtil {
 		DocumentEntity convertedEntity = DocumentEntity.of(entity.getClass().getSimpleName(), converter);
 		documentEntityConverter.toEntity(entity, convertedEntity);
 	}
-	
-	public static <T, K> T cache(Map<K, T> cacheMap, K key, Supplier<T> supplier) {
-		if(cacheMap.containsKey(key)) {
-			return cacheMap.get(key);
-		} else {
-			T obj = supplier.get();
-			cacheMap.put(key, obj);
-			return obj;
-		}
-	}
 }
