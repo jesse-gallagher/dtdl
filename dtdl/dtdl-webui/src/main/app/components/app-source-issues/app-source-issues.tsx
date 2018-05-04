@@ -27,6 +27,8 @@ export class AppSourceIssues {
     @State() private source: any;
     @State() private issues: Array<any>;
     @State() private updating: boolean;
+    
+    @State() private activeIssue: any;
 
     componentDidLoad() {
         this.refreshSource();
@@ -34,6 +36,7 @@ export class AppSourceIssues {
     
     @Watch("match")
     matchHandler(newValue: MatchResults, oldValue: MatchResults) {
+        this.activeIssue = null;
         this.refreshSource();
     }
 
@@ -75,7 +78,7 @@ export class AppSourceIssues {
 
     renderIssues() {
         if(this.updating) {
-            return <tr><td colSpan={5} style={{textAlign: 'center'}}><div class="loader" style={{margin: '0 auto'}}></div></td></tr>
+            return <tr><td colSpan={3} style={{textAlign: 'center'}}><div class="loader" style={{margin: '0 auto'}}></div></td></tr>
         }
         if (this.issues == null) {
             return [];
@@ -89,29 +92,40 @@ export class AppSourceIssues {
             return (<tr>
                 <td>{issue.id}</td>
                 <td>
-                    {this.renderIssueBody(issue)}
-                    <a href={issue.url} target="_blank">{issue.title}</a>
+                    <a href='javascript:void(0)' onClick={() => this.activeIssue = issue}>{issue.title}</a>
                 </td>
                 <td>{issue.status}</td>
-                <td>{tags.join(', ')}</td>
-                <td>{version}</td>
             </tr>)
         });
     }
     
-    renderIssueBody(issue:any):any {
-        const id = issue.url.replace(/[^a-zA-Z0-9]*/g, "");
-        if(issue.body) {
-            return (
-                <div>
-                    <button data-toggle='modal' data-target={'#'+id+'_modal_modal'} class='float-right btn btn-info btn-sm'>Show</button>
-                    <bs-modal id={id+'_modal'} modalHTML={issue.body}></bs-modal>
-                </div>
-            );
-        } else {
+    renderActiveIssue():any {
+        if(!this.activeIssue) {
             return null;
         }
+        
+        const issue = this.activeIssue;
+        const tags = issue.tags ? issue.tags : [];
+        
+        return (
+            <div class="issue">
+                <h2>#{issue.id} - {issue.title}</h2>
+                <h3>{issue.status}</h3>
+                <h4><a href={issue.url} target="_blank">{issue.url}</a></h4>
+                {this.renderIssueTags(issue)}
+                <hr />
+                <div innerHTML={this.activeIssue.body}></div>
+            </div>
+        );
     }
+    renderIssueTags(issue:any):any {
+        if(!(issue.tags instanceof Array)) {
+            return null;
+        } else {
+            return <p>{issue.tags.map(tag => <span class='badge badge-primary'>{tag}</span>)}</p>
+        }
+    }
+    
 
     render() {
         if (this.source == null) {
@@ -121,20 +135,25 @@ export class AppSourceIssues {
             <div>
                 <h2>{this.source.title}</h2>
                 
-                <table class="table table-striped table-sm table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Tags</th>
-                            <th>Version</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderIssues()}
-                    </tbody>
-                </table>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <table class="table table-striped table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.renderIssues()}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                         {this.renderActiveIssue()}
+                    </div>
+                </div>
             </div>
         )
     }
