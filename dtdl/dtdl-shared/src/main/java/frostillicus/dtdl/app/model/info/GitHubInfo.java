@@ -20,14 +20,14 @@ import javax.validation.constraints.NotEmpty;
 import org.jnosql.artemis.Column;
 import org.jnosql.artemis.Embeddable;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Embeddable
+@Embeddable @Data @NoArgsConstructor
 public class GitHubInfo implements InfoHolder {
-	@Column @Getter @Setter @NotEmpty
+	@Column @NotEmpty
 	private String token;
 	
-	@Column @Getter @Setter @NotEmpty
+	@Column @NotEmpty
 	private String repository;
 }

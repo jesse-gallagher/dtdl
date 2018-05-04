@@ -20,17 +20,17 @@ import javax.validation.constraints.NotEmpty;
 import org.jnosql.artemis.Column;
 import org.jnosql.artemis.Embeddable;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Embeddable
+@Embeddable @Data @NoArgsConstructor
 public class BitbucketInfo implements InfoHolder {
-	@Column @Getter @Setter @NotEmpty
+	@Column @NotEmpty
 	private String username;
 	
-	@Column @Getter @Setter @NotEmpty
+	@Column @NotEmpty
 	private String password;
 	
-	@Column @Getter @Setter @NotEmpty
+	@Column @NotEmpty
 	private String repository;
 }
