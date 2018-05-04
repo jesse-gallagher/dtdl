@@ -33,6 +33,13 @@ export class AppEditSource {
         console.log(this.match);
         this.refreshSource();
     }
+    
+    getSourceTypes():Array<any> {
+        return [
+            { id: "GITHUB", label: "GitHub" },
+            { id: "BITBUCKET", label: "Bitbucket" }
+        ];
+    }
 
     refreshSource() {
         try {
@@ -40,7 +47,8 @@ export class AppEditSource {
                 this.source = {
                     title: '',
                     type: '',
-                    github: { }
+                    github: { },
+                    bitbucket: { }
                 };
                 return;
             }
@@ -104,6 +112,7 @@ export class AppEditSource {
         };
     }
     
+    // TODO refactor these into a common mechanism
     handleGitHubFieldUpdate(prop: string, e) {
         const newObj = {};
         newObj[prop] = e.target.value;
@@ -113,8 +122,75 @@ export class AppEditSource {
         }
         this.source = {
             ...this.source,
-            github: github
+            github
         };
+    }
+    handleBitbucketFieldUpdate(prop: string, e) {
+        const newObj = {};
+        newObj[prop] = e.target.value;
+        const bitbucket = {
+            ...this.source.bitbucket,
+            ...newObj
+        }
+        this.source = {
+            ...this.source,
+            bitbucket
+        };
+    }
+    
+    renderSourceInfo():any {
+        if(this.source == null) {
+            return null;
+        }
+        
+        switch(this.source.type) {
+        case "GITHUB":
+            return (
+                <fieldset>
+                    <legend>GitHub Info</legend>
+                    
+                    <div class="form-group">
+                        <label htmlFor="gitHubToken">Token</label>
+                        <input type="text" class="form-control" id="gitHubToken" value={this.source.github.token}
+                            onInput={(e) => this.handleGitHubFieldUpdate('token', e)}
+                            onChange={(e) => this.handleGitHubFieldUpdate('token', e)} />
+                    </div>
+                    <div class="form-group">
+                        <label htmlFor="gitHubRepository">Repository</label>
+                        <input type="text" class="form-control" id="gitHubRepository" value={this.source.github.repository}
+                            onInput={(e) => this.handleGitHubFieldUpdate('repository', e)}
+                            onChange={(e) => this.handleGitHubFieldUpdate('repository', e)} />
+                    </div>
+                </fieldset>
+            );
+        case "BITBUCKET":
+            return (
+                <fieldset>
+                    <legend>Bitbucket Info</legend>
+                    
+                    <div class="form-group">
+                        <label htmlFor="bitbucketUsername">Username</label>
+                        <input type="text" class="form-control" id="bitbucketUsername" value={this.source.bitbucket.username}
+                            onInput={(e) => this.handleBitbucketFieldUpdate('username', e)}
+                            onChange={(e) => this.handleBitbucketFieldUpdate('username', e)} />
+                    </div>
+                    <div class="form-group">
+                        <label htmlFor="bitbucketPassword">App-Specific Password</label>
+                        <input type="text" class="form-control" id="bitbucketPassword" value={this.source.bitbucket.password}
+                            onInput={(e) => this.handleBitbucketFieldUpdate('password', e)}
+                            onChange={(e) => this.handleBitbucketFieldUpdate('password', e)} />
+                    </div>
+                    <div class="form-group">
+                        <label htmlFor="bitbucketRepository">Repository</label>
+                        <input type="text" class="form-control" id="bitbucketRepository" value={this.source.bitbucket.repository}
+                            onInput={(e) => this.handleBitbucketFieldUpdate('repository', e)}
+                            onChange={(e) => this.handleBitbucketFieldUpdate('repository', e)} />
+                    </div>
+                </fieldset>
+            );
+        default:
+            return null;
+        }
     }
 
     render() {
@@ -135,22 +211,16 @@ export class AppEditSource {
                         </div>
                         <div class="form-group">
                             <label htmlFor="sourceType">Type</label>
-                            <input type="text" class="form-control" id="sourceType" value={this.source.type}
-                                onInput={(e) => this.handleSourceFieldUpdate('type', e)}
-                                onChange={(e) => this.handleSourceFieldUpdate('type', e)} />
+                            <select class="form-control" id="sourceType"
+                                onChange={(e) => this.handleSourceFieldUpdate('type', e)}>
+                                <option value="">- Select One -</option>
+                                {this.getSourceTypes().map(type =>
+                                    <option value={type.id} selected={this.source.type==type.id}>{type.label}</option>
+                                )}
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label htmlFor="gitHubToken">GitHub Token</label>
-                            <input type="text" class="form-control" id="gitHubToken" value={this.source.github.token}
-                                onInput={(e) => this.handleGitHubFieldUpdate('token', e)}
-                                onChange={(e) => this.handleGitHubFieldUpdate('token', e)} />
-                        </div>
-                        <div class="form-group">
-                            <label htmlFor="gitHubRepository">GitHub Repository</label>
-                            <input type="text" class="form-control" id="gitHubRepository" value={this.source.github.repository}
-                                onInput={(e) => this.handleGitHubFieldUpdate('repository', e)}
-                                onChange={(e) => this.handleGitHubFieldUpdate('repository', e)} />
-                        </div>
+                        
+                        {this.renderSourceInfo()}
 
                         <button class="btn btn-primary" onClick={(e) => this.updateSource(e)}>Update</button>
                     </form>

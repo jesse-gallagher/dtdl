@@ -25,10 +25,12 @@ import org.jnosql.artemis.Column;
 import org.jnosql.artemis.Entity;
 import org.jnosql.artemis.Id;
 
+import frostillicus.dtdl.app.model.info.BitbucketInfo;
 import frostillicus.dtdl.app.model.info.GitHubInfo;
 import frostillicus.dtdl.app.model.info.InfoHolder;
 import frostillicus.dtdl.app.model.issues.IssueProvider;
 import frostillicus.dtdl.app.model.util.ModelUtil;
+import frostillicus.dtdl.app.model.issues.BitbucketIssueProvider;
 import frostillicus.dtdl.app.model.issues.GitHubIssueProvider;
 import frostillicus.dtdl.app.model.issues.Issue;
 import lombok.AllArgsConstructor;
@@ -44,6 +46,11 @@ public class Source {
 			Messages.getString("Source.type.github"), //$NON-NLS-1$
 			GitHubInfo.class,
 			GitHubIssueProvider.class
+		),
+		BITBUCKET(
+			Messages.getString("Source.type.bitbucket"), //$NON-NLS-1$
+			BitbucketInfo.class,
+			BitbucketIssueProvider.class
 		);
 		
 		@Getter private final String friendlyName;
@@ -68,10 +75,21 @@ public class Source {
 	@Column @Getter @Setter
 	private GitHubInfo github;
 	
+	@Column @Getter @Setter
+	private BitbucketInfo bitbucket;
+	
 	public List<Issue> getIssues() {
 		if(type == null) {
 			return Collections.emptyList();
 		}
-		return type.getIssueProvider().getIssues(github);
+		switch(type) {
+		case GITHUB:
+			return type.getIssueProvider().getIssues(github);
+		case BITBUCKET:
+			return type.getIssueProvider().getIssues(bitbucket);
+		default:
+			return Collections.emptyList();
+		}
+		
 	}
 }
