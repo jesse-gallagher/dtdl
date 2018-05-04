@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor
 public class Issue {
 	public enum Status {
-		OPEN, CLOSED
+		NEW, OPEN, CLOSED, ON_HOLD
 	}
 	
 	@Embeddable @Data @Builder

@@ -92,6 +92,12 @@ public class BitbucketIssueProvider implements IssueProvider<BitbucketInfo> {
 		case "closed": //$NON-NLS-1$
 			status = Issue.Status.CLOSED;
 			break;
+		case "on hold": //$NON-NLS-1$
+			status = Issue.Status.ON_HOLD;
+			break;
+		case "new": //$NON-NLS-1$
+			status = Issue.Status.NEW;
+			break;
 		default:
 			status = Issue.Status.OPEN;
 			break;
