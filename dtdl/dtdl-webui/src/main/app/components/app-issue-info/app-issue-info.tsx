@@ -35,6 +35,7 @@ export class AppIssueInfo {
                 <h3>{issue.status}</h3>
                 <h4><a href={issue.url} target="_blank">{issue.url}</a></h4>
                 {this.renderIssueTags(issue)}
+                {this.renderAssignee(issue)}
                 <hr />
                 <div innerHTML={issue.body}></div>
             </div>
@@ -52,6 +53,15 @@ export class AppIssueInfo {
                     })
                 }
             </p>
+        }
+    }
+    
+    renderAssignee(issue:any):any {
+        if(!issue.assignedTo) {
+            return null;
+        } else {
+            const assignee = issue.assignedTo;
+            return <a href={assignee.url}><img class='inline-avatar' src={assignee.avatarUrl} />{assignee.name}</a>
         }
     }
 }

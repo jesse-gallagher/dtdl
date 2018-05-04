@@ -135,6 +135,26 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		
 		String content = issue.getContent();
 		String html = markdownHtml.render(markdown.parse(content));
+
+		BitbucketIssue.UserInfo responsible = issue.getResponsible();
+		Issue.Person assignee = null;
+		if(responsible != null) {
+			String name = responsible.getDisplayName();
+			if(StringUtil.isNotEmpty(name)) {
+				String avatarUrl = responsible.getAvatar();
+				String responsibleUri = responsible.getResourceUri();
+				String assigneeUrl = null;
+				if(StringUtil.isNotEmpty(responsibleUri)) {
+					assigneeUrl = "https://bitbucket.org" + responsibleUri.substring("/1.0".length()); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				assignee = Issue.Person.builder()
+						.name(name)
+						.avatarUrl(avatarUrl)
+						.url(assigneeUrl)
+						.build();
+			}
+			
+		}
 		
 		return Issue.builder()
 			.id(StringUtil.toString(issue.getLocalId()))
@@ -144,6 +164,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 			.tags(tags)
 			.version(version)
 			.body(html)
+			.assignedTo(assignee)
 			.build();
 	}
 	

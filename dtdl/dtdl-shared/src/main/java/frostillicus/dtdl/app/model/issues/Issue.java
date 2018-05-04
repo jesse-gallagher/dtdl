@@ -48,17 +48,21 @@ public class Issue {
 		@Column private String url;
 	}
 	
+	@Embeddable @Data @Builder
+	@NoArgsConstructor @AllArgsConstructor
+	public static class Person {
+		@Column private String name;
+		@Column private String avatarUrl;
+		@Column private String url;
+	}
+	
 	@Column String id;
-	@Column
-	private String title;
-	@Column
-	private String url;
-	@Column
-	private Status status;
-	@Column
-	private List<Tag> tags;
-	@Column
-	private Version version;
-	@Column
-	private String body;
+	@Column private String title;
+	@Column private String url;
+	@Column private Status status;
+	@Column private List<Tag> tags;
+	@Column private Version version;
+	@Column private String body;
+	@Column private Person assignedTo;
+	@Column private Person reportedBy;
 }
