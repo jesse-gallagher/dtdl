@@ -1,0 +1,13 @@
+Darwino To-Do List
+
+(c) Copyright 2018 Jesse Gallagher
+
+This product is licensed under the terms of the Apache License 2.0.
+
+The project contains the following 3rd-party code:
+
+- Reflections, which is copyright Sam Hocevar, licensed under the DWTFYWPL, and available from https://github.com/ronmamo/reflections
+- Apache Commons Collections 4, which is licensed under the Apache License 2.0 and available from https://commons.apache.org/proper/commons-collections/
+- org.eclipse.egit.github.core from the Eclipse EGit Github Connector, which is licensed under the Eclipse Public License 1.0 and available from https://github.com/eclipse/egit-github
+- JNoSQL, which is licensed under the Eclipse Public License 1.0 and available from http://www.jnosql.org
+- The Darwino JNoSQL driver, which is licensed under the Apache License 2.0 and available from https://github.com/darwino/diana-driver
