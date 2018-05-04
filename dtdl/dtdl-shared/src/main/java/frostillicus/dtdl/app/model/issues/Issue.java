@@ -15,6 +15,8 @@
  */
 package frostillicus.dtdl.app.model.issues;
 
+import java.util.List;
+
 import org.jnosql.artemis.Column;
 import org.jnosql.artemis.Entity;
 
@@ -35,4 +37,6 @@ public class Issue {
 	private String url;
 	@Column
 	private Status status;
+	@Column
+	private List<String> tags;
 }

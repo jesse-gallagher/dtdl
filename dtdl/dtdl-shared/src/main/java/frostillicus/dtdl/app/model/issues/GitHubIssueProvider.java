@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.eclipse.egit.github.core.Label;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.IssueService;
@@ -59,6 +60,11 @@ public class GitHubIssueProvider implements IssueProvider<GitHubInfo> {
 			status = Issue.Status.OPEN;
 			break;
 		}
-		return new Issue(i.getTitle(), i.getHtmlUrl(), status);
+		
+		List<String> tags = i.getLabels().stream()
+				.map(Label::getName)
+				.collect(Collectors.toList());
+		
+		return new Issue(i.getTitle(), i.getHtmlUrl(), status, tags);
 	}
 }

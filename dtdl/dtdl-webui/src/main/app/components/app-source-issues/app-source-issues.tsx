@@ -75,17 +75,20 @@ export class AppSourceIssues {
 
     renderIssues() {
         if(this.updating) {
-            return <tr><td colSpan={2} style={{textAlign: 'center'}}><div class="loader" style={{margin: '0 auto'}}></div></td></tr>
+            return <tr><td colSpan={3} style={{textAlign: 'center'}}><div class="loader" style={{margin: '0 auto'}}></div></td></tr>
         }
         if (this.issues == null) {
             return [];
         }
-        return this.issues.map(issue =>
-            <tr>
+        return this.issues.map(issue => {
+            const tags = issue.tags instanceof Array ? issue.tags : [];
+            
+            return (<tr>
                 <td><a href={issue.url} target="_blank">{issue.title}</a></td>
                 <td>{issue.status}</td>
-            </tr>
-        );
+                <td>{tags.join(', ')}</td>
+            </tr>)
+        });
     }
 
     render() {
@@ -101,6 +104,7 @@ export class AppSourceIssues {
                         <tr>
                             <th>Title</th>
                             <th>Status</th>
+                            <th>Tags</th>
                         </tr>
                     </thead>
                     <tbody>
