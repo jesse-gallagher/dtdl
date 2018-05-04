@@ -40,6 +40,14 @@ public class Issue {
 		@Column private String url;
 	}
 	
+	@Embeddable @Data @Builder
+	@NoArgsConstructor @AllArgsConstructor
+	public static class Tag {
+		@Column private String name;
+		@Column private String color;
+		@Column private String url;
+	}
+	
 	@Column String id;
 	@Column
 	private String title;
@@ -48,7 +56,7 @@ public class Issue {
 	@Column
 	private Status status;
 	@Column
-	private List<String> tags;
+	private List<Tag> tags;
 	@Column
 	private Version version;
 	@Column

@@ -67,8 +67,8 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 			break;
 		}
 		
-		List<String> tags = i.getLabels().stream()
-				.map(Label::getName)
+		List<Issue.Tag> tags = i.getLabels().stream()
+				.map(this::createTag)
 				.collect(Collectors.toList());
 		
 		Milestone milestone = i.getMilestone();
@@ -92,5 +92,13 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 			.version(version)
 			.body(html)
 			.build();
+	}
+	
+	private Issue.Tag createTag(Label label) {
+		return Issue.Tag.builder()
+				.name(label.getName())
+				.color(label.getColor())
+				.url(label.getUrl())
+				.build();
 	}
 }

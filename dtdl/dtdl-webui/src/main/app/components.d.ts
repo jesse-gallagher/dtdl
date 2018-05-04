@@ -98,6 +98,39 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface AppIssueInfo {
+      'issue': any;
+    }
+  }
+
+  interface HTMLAppIssueInfoElement extends StencilComponents.AppIssueInfo, HTMLStencilElement {}
+
+  var HTMLAppIssueInfoElement: {
+    prototype: HTMLAppIssueInfoElement;
+    new (): HTMLAppIssueInfoElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-issue-info': HTMLAppIssueInfoElement;
+  }
+  interface ElementTagNameMap {
+    'app-issue-info': HTMLAppIssueInfoElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-issue-info': JSXElements.AppIssueInfoAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppIssueInfoAttributes extends HTMLAttributes {
+      'issue'?: any;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface AppNavbar {
 
     }

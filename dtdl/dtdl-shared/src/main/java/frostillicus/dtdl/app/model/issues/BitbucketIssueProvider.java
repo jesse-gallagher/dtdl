@@ -122,7 +122,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 			break;
 		}
 		
-		List<String> tags = Collections.emptyList();
+		List<Issue.Tag> tags = Collections.emptyList();
 		
 		BitbucketIssue.Metadata m = issue.getMetadata();
 		Issue.Version version = null;

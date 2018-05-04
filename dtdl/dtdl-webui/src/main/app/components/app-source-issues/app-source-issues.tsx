@@ -99,33 +99,6 @@ export class AppSourceIssues {
         });
     }
     
-    renderActiveIssue():any {
-        if(!this.activeIssue) {
-            return null;
-        }
-        
-        const issue = this.activeIssue;
-        const tags = issue.tags ? issue.tags : [];
-        
-        return (
-            <div class="issue">
-                <h2>#{issue.id} - {issue.title}</h2>
-                <h3>{issue.status}</h3>
-                <h4><a href={issue.url} target="_blank">{issue.url}</a></h4>
-                {this.renderIssueTags(issue)}
-                <hr />
-                <div innerHTML={this.activeIssue.body}></div>
-            </div>
-        );
-    }
-    renderIssueTags(issue:any):any {
-        if(!(issue.tags instanceof Array)) {
-            return null;
-        } else {
-            return <p>{issue.tags.map(tag => <span class='badge badge-primary'>{tag}</span>)}</p>
-        }
-    }
-    
 
     render() {
         if (this.source == null) {
@@ -137,7 +110,7 @@ export class AppSourceIssues {
                 
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
-                        <table class="table table-striped table-sm table-bordered">
+                        <table class="table table-striped table-sm tab2le-bordered">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -151,7 +124,7 @@ export class AppSourceIssues {
                         </table>
                     </div>
                     <div class="col-md-6 col-sm-12">
-                         {this.renderActiveIssue()}
+                         <app-issue-info issue={this.activeIssue}></app-issue-info>
                     </div>
                 </div>
             </div>
