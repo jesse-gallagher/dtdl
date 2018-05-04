@@ -17,7 +17,8 @@
 import { Component, Prop } from '@stencil/core';
 
 @Component({
-    tag: 'app-issue-info'
+    tag: 'app-issue-info',
+    styleUrl: 'app-issue-info.css'
 })
 export class AppIssueInfo {
     @Prop() issue:any;
