@@ -75,18 +75,23 @@ export class AppSourceIssues {
 
     renderIssues() {
         if(this.updating) {
-            return <tr><td colSpan={3} style={{textAlign: 'center'}}><div class="loader" style={{margin: '0 auto'}}></div></td></tr>
+            return <tr><td colSpan={5} style={{textAlign: 'center'}}><div class="loader" style={{margin: '0 auto'}}></div></td></tr>
         }
         if (this.issues == null) {
             return [];
         }
         return this.issues.map(issue => {
             const tags = issue.tags instanceof Array ? issue.tags : [];
+            const version = issue.version ?
+                    issue.version.name :
+                    null;
             
             return (<tr>
+                <td>{issue.id}</td>
                 <td><a href={issue.url} target="_blank">{issue.title}</a></td>
                 <td>{issue.status}</td>
                 <td>{tags.join(', ')}</td>
+                <td>{version}</td>
             </tr>)
         });
     }
@@ -102,9 +107,11 @@ export class AppSourceIssues {
                 <table class="table table-striped table-sm table-bordered">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Title</th>
                             <th>Status</th>
                             <th>Tags</th>
+                            <th>Version</th>
                         </tr>
                     </thead>
                     <tbody>

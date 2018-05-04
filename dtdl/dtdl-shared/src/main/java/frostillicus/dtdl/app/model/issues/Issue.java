@@ -18,19 +18,29 @@ package frostillicus.dtdl.app.model.issues;
 import java.util.List;
 
 import org.jnosql.artemis.Column;
+import org.jnosql.artemis.Embeddable;
 import org.jnosql.artemis.Entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity @Data
-@AllArgsConstructor @NoArgsConstructor
+@Entity @Data @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class Issue {
 	public enum Status {
 		OPEN, CLOSED
 	}
 	
+	@Embeddable @Data @Builder
+	@NoArgsConstructor @AllArgsConstructor
+	public static class Version {
+		@Column private String name;
+		@Column private String url;
+	}
+	
+	@Column String id;
 	@Column
 	private String title;
 	@Column
@@ -39,4 +49,6 @@ public class Issue {
 	private Status status;
 	@Column
 	private List<String> tags;
+	@Column
+	private Version version;
 }

@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.egit.github.core.Label;
+import org.eclipse.egit.github.core.Milestone;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.IssueService;
@@ -65,6 +66,22 @@ public class GitHubIssueProvider implements IssueProvider<GitHubInfo> {
 				.map(Label::getName)
 				.collect(Collectors.toList());
 		
-		return new Issue(i.getTitle(), i.getHtmlUrl(), status, tags);
+		Milestone milestone = i.getMilestone();
+		Issue.Version version = null;
+		if(milestone != null) {
+			Issue.Version.builder()
+				.name(milestone.getTitle())
+				.url(milestone.getUrl())
+				.build();
+		}
+		
+		return Issue.builder()
+			.id(StringUtil.toString(i.getNumber()))
+			.title(i.getTitle())
+			.url(i.getHtmlUrl())
+			.status(status)
+			.tags(tags)
+			.version(version)
+			.build();
 	}
 }
