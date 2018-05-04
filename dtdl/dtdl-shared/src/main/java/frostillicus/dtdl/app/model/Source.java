@@ -28,7 +28,7 @@ import org.jnosql.artemis.Id;
 import frostillicus.dtdl.app.model.info.BitbucketInfo;
 import frostillicus.dtdl.app.model.info.GitHubInfo;
 import frostillicus.dtdl.app.model.info.InfoHolder;
-import frostillicus.dtdl.app.model.issues.IssueProvider;
+import frostillicus.dtdl.app.model.issues.AbstractIssueProvider;
 import frostillicus.dtdl.app.model.util.ModelUtil;
 import frostillicus.dtdl.app.model.issues.BitbucketIssueProvider;
 import frostillicus.dtdl.app.model.issues.GitHubIssueProvider;
@@ -55,10 +55,10 @@ public class Source {
 		
 		@Getter private final String friendlyName;
 		@Getter private final Class<? extends InfoHolder> infoClass;
-		@Getter private final Class<? extends IssueProvider<?>> issueProviderClass;
+		@Getter private final Class<? extends AbstractIssueProvider<?>> issueProviderClass;
 		
 		@SuppressWarnings("unchecked")
-		public <Q extends InfoHolder, T extends IssueProvider<Q>> T getIssueProvider() {
+		public <Q extends InfoHolder, T extends AbstractIssueProvider<Q>> T getIssueProvider() {
 			return (T)ModelUtil.instantiateObject(issueProviderClass);
 		}
 	}

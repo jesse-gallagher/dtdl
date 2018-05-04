@@ -31,11 +31,11 @@ import com.darwino.commons.util.StringUtil;
 import frostillicus.dtdl.app.model.info.GitHubInfo;
 import lombok.SneakyThrows;
 
-public class GitHubIssueProvider implements IssueProvider<GitHubInfo> {
+public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 	
 	@Override
 	@SneakyThrows
-	public List<Issue> getIssues(GitHubInfo info) {
+	protected List<Issue> _getIssues(GitHubInfo info) {
 		GitHubClient client = new GitHubClient();
 		client.setOAuth2Token(info.getToken());
 		

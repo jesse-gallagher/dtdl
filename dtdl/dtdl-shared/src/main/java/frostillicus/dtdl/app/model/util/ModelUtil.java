@@ -24,8 +24,10 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.enterprise.inject.Instance;
 
@@ -166,5 +168,15 @@ public enum ModelUtil {
 		List<Document> converter = EntityConverter.toDocuments(json);
 		DocumentEntity convertedEntity = DocumentEntity.of(entity.getClass().getSimpleName(), converter);
 		documentEntityConverter.toEntity(entity, convertedEntity);
+	}
+	
+	public static <T, K> T cache(Map<K, T> cacheMap, K key, Supplier<T> supplier) {
+		if(cacheMap.containsKey(key)) {
+			return cacheMap.get(key);
+		} else {
+			T obj = supplier.get();
+			cacheMap.put(key, obj);
+			return obj;
+		}
 	}
 }

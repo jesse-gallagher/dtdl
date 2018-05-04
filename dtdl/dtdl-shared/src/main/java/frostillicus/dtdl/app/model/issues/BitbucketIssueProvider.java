@@ -26,7 +26,6 @@ import com.darwino.commons.Platform;
 import com.darwino.commons.httpclnt.HttpClient;
 import com.darwino.commons.httpclnt.HttpClientService;
 import com.darwino.commons.json.JsonArray;
-import com.darwino.commons.json.JsonException;
 import com.darwino.commons.json.JsonObject;
 import com.darwino.commons.util.StringUtil;
 
@@ -36,15 +35,14 @@ import frostillicus.dtdl.app.model.info.BitbucketInfo;
 import frostillicus.dtdl.app.model.util.ModelUtil;
 import lombok.SneakyThrows;
 
-public class BitbucketIssueProvider implements IssueProvider<BitbucketInfo> {
+public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo> {
 	
 	public static final String API_BASE = "https://api.bitbucket.org/1.0"; //$NON-NLS-1$
 	public static final String REPOSITORIES_RESOURCE = "repositories"; //$NON-NLS-1$
 	public static final String ISSUES_RESOURCE = "issues"; //$NON-NLS-1$
 
 	@Override
-	@SneakyThrows
-	public List<Issue> getIssues(BitbucketInfo info) {
+	protected List<Issue> _getIssues(BitbucketInfo info) {
 		HttpClient client = getBitbucketClient(info);
 		
 		String repository = StringUtil.toString(info.getRepository());
@@ -63,8 +61,8 @@ public class BitbucketIssueProvider implements IssueProvider<BitbucketInfo> {
 	// *******************************************************************************
 	// * Internal utility methods
 	// *******************************************************************************
-	
-	private void fetch(List<Issue> result, HttpClient client, String org, String repo, int start) throws JsonException {
+	@SneakyThrows
+	private void fetch(List<Issue> result, HttpClient client, String org, String repo, int start) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("limit", 50); //$NON-NLS-1$
 		params.put("status", Arrays.asList("open", "new", "on hold")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$

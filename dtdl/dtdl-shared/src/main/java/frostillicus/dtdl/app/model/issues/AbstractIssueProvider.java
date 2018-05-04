@@ -15,10 +15,21 @@
  */
 package frostillicus.dtdl.app.model.issues;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.collections4.map.PassiveExpiringMap;
 
 import frostillicus.dtdl.app.model.info.InfoHolder;
+import frostillicus.dtdl.app.model.util.ModelUtil;
 
-public interface IssueProvider<T extends InfoHolder> {
-	List<Issue> getIssues(T info);
+public abstract class AbstractIssueProvider<T extends InfoHolder> {
+	private Map<T, List<Issue>> CACHE = Collections.synchronizedMap(new PassiveExpiringMap<>(30, TimeUnit.SECONDS));
+	
+	public final List<Issue> getIssues(T info) {
+		return ModelUtil.cache(CACHE, info, () -> _getIssues(info));
+	}
+	protected abstract List<Issue> _getIssues(T info);
 }
