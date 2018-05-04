@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.eclipse.egit.github.core.Label;
 import org.eclipse.egit.github.core.Milestone;
 import org.eclipse.egit.github.core.RepositoryId;
@@ -32,6 +34,9 @@ import frostillicus.dtdl.app.model.info.GitHubInfo;
 import lombok.SneakyThrows;
 
 public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
+	
+	private Parser markdown = Parser.builder().build();
+	private HtmlRenderer markdownHtml = HtmlRenderer.builder().build();
 	
 	@Override
 	@SneakyThrows
@@ -75,6 +80,9 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 				.build();
 		}
 		
+		String content = i.getBody();
+		String html = markdownHtml.render(markdown.parse(content));
+		
 		return Issue.builder()
 			.id(StringUtil.toString(i.getNumber()))
 			.title(i.getTitle())
@@ -82,6 +90,7 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 			.status(status)
 			.tags(tags)
 			.version(version)
+			.body(html)
 			.build();
 	}
 }
