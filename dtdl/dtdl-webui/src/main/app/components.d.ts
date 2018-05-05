@@ -230,43 +230,6 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface BsModal {
-      'id': string;
-      'modalHTML': string;
-      'modalTitle': string;
-    }
-  }
-
-  interface HTMLBsModalElement extends StencilComponents.BsModal, HTMLStencilElement {}
-
-  var HTMLBsModalElement: {
-    prototype: HTMLBsModalElement;
-    new (): HTMLBsModalElement;
-  };
-  interface HTMLElementTagNameMap {
-    'bs-modal': HTMLBsModalElement;
-  }
-  interface ElementTagNameMap {
-    'bs-modal': HTMLBsModalElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'bs-modal': JSXElements.BsModalAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface BsModalAttributes extends HTMLAttributes {
-      'id'?: string;
-      'modalHTML'?: string;
-      'modalTitle'?: string;
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
     interface DtdlApp {
 
     }
