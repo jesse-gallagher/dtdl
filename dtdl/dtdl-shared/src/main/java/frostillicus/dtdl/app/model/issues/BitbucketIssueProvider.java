@@ -32,7 +32,6 @@ import com.darwino.commons.json.JsonArray;
 import com.darwino.commons.json.JsonObject;
 import com.darwino.commons.util.StringUtil;
 
-import frostillicus.dtdl.app.WeldContext;
 import frostillicus.dtdl.app.model.bitbucket.BitbucketIssue;
 import frostillicus.dtdl.app.model.info.BitbucketInfo;
 import frostillicus.dtdl.app.model.util.ModelUtil;
@@ -100,7 +99,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 			throw new IllegalStateException("Received unexpected issue JSON: " + obj);
 		}
 		JsonObject json = (JsonObject)obj;
-		BitbucketIssue issue = ModelUtil.toEntity(WeldContext.INSTANCE.getContainer(), json, BitbucketIssue.class);
+		BitbucketIssue issue = ModelUtil.toEntity(json, BitbucketIssue.class);
 		
 		String title = issue.getTitle();
 		String resourceUri = issue.getResourceUri();

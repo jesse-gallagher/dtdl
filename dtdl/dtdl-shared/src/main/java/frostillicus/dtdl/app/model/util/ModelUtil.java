@@ -24,12 +24,10 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
-import javax.enterprise.inject.Instance;
+import javax.enterprise.inject.spi.CDI;
 
 import org.darwino.jnosql.diana.driver.EntityConverter;
 import org.jnosql.artemis.Entity;
@@ -78,7 +76,7 @@ public enum ModelUtil {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static synchronized <C, T extends Repository<C, ?>> T getRepository(Instance<Object> cdiInstance, Class<C> modelClass) {
+	public static synchronized <C, T extends Repository<C, ?>> T getRepository(Class<C> modelClass) {
 		if(repositoryClasses == null) {
 			repositoryClasses = (Set<Class<? extends Repository<?, ?>>>)(Set<?>)reflections.getSubTypesOf(Repository.class);
 		}
@@ -89,7 +87,7 @@ public enum ModelUtil {
 				if(type instanceof ParameterizedType) {
 					ParameterizedType pt = (ParameterizedType)type;
 					if(Arrays.asList(pt.getActualTypeArguments()).contains(modelClass)) {
-						return (T) cdiInstance.select(clazz).get();
+						return (T) CDI.current().select(clazz).get();
 					}
 				}
 			}
@@ -150,21 +148,21 @@ public enum ModelUtil {
 		}
 	}
 	
-	public static JsonObject toJson(Instance<Object> cdiInstance, Object entity) {
-		DocumentEntityConverter documentEntityConverter = cdiInstance.select(DocumentEntityConverter.class).get();
+	public static JsonObject toJson(Object entity) {
+		DocumentEntityConverter documentEntityConverter = CDI.current().select(DocumentEntityConverter.class).get();
 		DocumentEntity doc = documentEntityConverter.toDocument(entity);
 		return EntityConverter.convert(doc, true);
 	}
 	
-	public static <T> T toEntity(Instance<Object> cdiInstance, JsonObject json, Class<T> modelClass) {
-		DocumentEntityConverter documentEntityConverter = cdiInstance.select(DocumentEntityConverter.class).get();
+	public static <T> T toEntity(JsonObject json, Class<T> modelClass) {
+		DocumentEntityConverter documentEntityConverter = CDI.current().select(DocumentEntityConverter.class).get();
 		List<Document> converter = EntityConverter.toDocuments(json);
 		DocumentEntity convertedEntity = DocumentEntity.of(modelClass.getSimpleName(), converter);
 		return documentEntityConverter.toEntity(modelClass, convertedEntity);
 	}
 	
-	public static void updateEntity(Instance<Object> cdiInstance, Object entity, JsonObject json) {
-		DocumentEntityConverter documentEntityConverter = cdiInstance.select(DocumentEntityConverter.class).get();
+	public static void updateEntity(Object entity, JsonObject json) {
+		DocumentEntityConverter documentEntityConverter = CDI.current().select(DocumentEntityConverter.class).get();
 		List<Document> converter = EntityConverter.toDocuments(json);
 		DocumentEntity convertedEntity = DocumentEntity.of(entity.getClass().getSimpleName(), converter);
 		documentEntityConverter.toEntity(entity, convertedEntity);
