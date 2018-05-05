@@ -138,7 +138,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		String html = markdown.toHtml(content);
 
 		BitbucketIssue.UserInfo responsible = issue.getResponsible();
-		Issue.Person assignee = null;
+		Person assignee = null;
 		if(responsible != null) {
 			String name = responsible.getDisplayName();
 			if(StringUtil.isNotEmpty(name)) {
@@ -148,7 +148,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 				if(StringUtil.isNotEmpty(responsibleUri)) {
 					assigneeUrl = "https://bitbucket.org" + responsibleUri.substring("/1.0".length()); //$NON-NLS-1$ //$NON-NLS-2$
 				}
-				assignee = Issue.Person.builder()
+				assignee = Person.builder()
 						.name(name)
 						.avatarUrl(avatarUrl)
 						.url(assigneeUrl)
