@@ -22,8 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import com.darwino.commons.Platform;
 import com.darwino.commons.httpclnt.HttpClient;
@@ -32,19 +32,21 @@ import com.darwino.commons.json.JsonArray;
 import com.darwino.commons.json.JsonObject;
 import com.darwino.commons.util.StringUtil;
 
+import frostillicus.dtdl.app.beans.MarkdownBean;
 import frostillicus.dtdl.app.model.bitbucket.BitbucketIssue;
 import frostillicus.dtdl.app.model.info.BitbucketInfo;
 import frostillicus.dtdl.app.model.util.ModelUtil;
 import lombok.SneakyThrows;
 
+@ApplicationScoped
 public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo> {
 	
 	public static final String API_BASE = "https://api.bitbucket.org/1.0"; //$NON-NLS-1$
 	public static final String REPOSITORIES_RESOURCE = "repositories"; //$NON-NLS-1$
 	public static final String ISSUES_RESOURCE = "issues"; //$NON-NLS-1$
 	
-	private Parser markdown = Parser.builder().build();
-	private HtmlRenderer markdownHtml = HtmlRenderer.builder().build();
+	@Inject
+	private MarkdownBean markdown;
 
 	@Override
 	protected List<Issue> doGetIssues(BitbucketInfo info) {
@@ -133,7 +135,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		}
 		
 		String content = issue.getContent();
-		String html = markdownHtml.render(markdown.parse(content));
+		String html = markdown.toHtml(content);
 
 		BitbucketIssue.UserInfo responsible = issue.getResponsible();
 		Issue.Person assignee = null;

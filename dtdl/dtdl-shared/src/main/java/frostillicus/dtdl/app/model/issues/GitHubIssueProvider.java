@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.eclipse.egit.github.core.Label;
 import org.eclipse.egit.github.core.Milestone;
 import org.eclipse.egit.github.core.RepositoryId;
@@ -30,13 +31,14 @@ import org.eclipse.egit.github.core.service.IssueService;
 
 import com.darwino.commons.util.StringUtil;
 
+import frostillicus.dtdl.app.beans.MarkdownBean;
 import frostillicus.dtdl.app.model.info.GitHubInfo;
 import lombok.SneakyThrows;
 
+@ApplicationScoped
 public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
-	
-	private Parser markdown = Parser.builder().build();
-	private HtmlRenderer markdownHtml = HtmlRenderer.builder().build();
+	@Inject
+	private MarkdownBean markdown;
 	
 	@Override
 	@SneakyThrows
@@ -91,7 +93,7 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 		}
 		
 		String content = i.getBody();
-		String html = markdownHtml.render(markdown.parse(content));
+		String html = markdown.toHtml(content);
 		
 		return Issue.builder()
 			.id(StringUtil.toString(i.getNumber()))

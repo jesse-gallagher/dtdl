@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import javax.enterprise.inject.spi.CDI;
 import javax.validation.constraints.NotEmpty;
 
 import org.jnosql.artemis.Column;
@@ -29,7 +30,6 @@ import frostillicus.dtdl.app.model.info.BitbucketInfo;
 import frostillicus.dtdl.app.model.info.GitHubInfo;
 import frostillicus.dtdl.app.model.info.InfoHolder;
 import frostillicus.dtdl.app.model.issues.AbstractIssueProvider;
-import frostillicus.dtdl.app.model.util.ModelUtil;
 import frostillicus.dtdl.app.model.issues.BitbucketIssueProvider;
 import frostillicus.dtdl.app.model.issues.GitHubIssueProvider;
 import frostillicus.dtdl.app.model.issues.Issue;
@@ -59,7 +59,7 @@ public class Source {
 		
 		@SuppressWarnings("unchecked")
 		public <Q extends InfoHolder, T extends AbstractIssueProvider<Q>> T getIssueProvider() {
-			return (T)ModelUtil.instantiateObject(issueProviderClass);
+			return (T)CDI.current().select(issueProviderClass).get();
 		}
 	}
 	
