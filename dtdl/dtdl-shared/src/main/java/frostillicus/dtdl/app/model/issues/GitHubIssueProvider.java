@@ -80,6 +80,16 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 				.build();
 		}
 		
+		org.eclipse.egit.github.core.User u = i.getAssignee();
+		Issue.Person assignedTo = null;
+		if(u != null) {
+			assignedTo = Issue.Person.builder()
+				.name(u.getLogin())
+				.avatarUrl(u.getAvatarUrl())
+				.url(u.getUrl())
+				.build();
+		}
+		
 		String content = i.getBody();
 		String html = markdownHtml.render(markdown.parse(content));
 		
@@ -90,6 +100,7 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 			.status(status)
 			.tags(tags)
 			.version(version)
+			.assignedTo(assignedTo)
 			.body(html)
 			.build();
 	}
