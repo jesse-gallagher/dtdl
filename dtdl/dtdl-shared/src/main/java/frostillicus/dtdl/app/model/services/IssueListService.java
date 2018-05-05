@@ -17,6 +17,7 @@ package frostillicus.dtdl.app.model.services;
 
 import java.util.stream.Collectors;
 
+import javax.enterprise.inject.spi.CDI;
 import javax.validation.constraints.NotNull;
 
 import org.darwino.jnosql.diana.driver.EntityConverter;
@@ -27,7 +28,6 @@ import com.darwino.commons.json.JsonObject;
 import com.darwino.commons.services.AbstractHttpService;
 import com.darwino.commons.services.HttpServiceContext;
 
-import frostillicus.dtdl.app.WeldContext;
 import frostillicus.dtdl.app.model.Source;
 import frostillicus.dtdl.app.model.util.ModelUtil;
 import lombok.AllArgsConstructor;
@@ -45,7 +45,7 @@ public class IssueListService extends AbstractHttpService {
 			throw new NullPointerException("Could not find repository for class " + Source.class.getName()); //$NON-NLS-1$
 		}
 
-		DocumentEntityConverter documentEntityConverter = WeldContext.INSTANCE.getBean(DocumentEntityConverter.class);
+		DocumentEntityConverter documentEntityConverter = CDI.current().select(DocumentEntityConverter.class).get();
 		
 		Source source = repository.findById(sourceId).orElseThrow(() -> new RuntimeException("Could not find source for ID " + sourceId)); //$NON-NLS-1$
 		context.emitJson(JsonObject.of(
