@@ -25,10 +25,16 @@ import org.apache.commons.collections4.map.PassiveExpiringMap;
 import frostillicus.dtdl.app.model.info.InfoHolder;
 
 public abstract class AbstractIssueProvider<T extends InfoHolder> {
-	private Map<T, List<Issue>> CACHE = Collections.synchronizedMap(new PassiveExpiringMap<>(30, TimeUnit.SECONDS));
+	private Map<T, List<Issue>> ISSUE_CACHE = Collections.synchronizedMap(new PassiveExpiringMap<>(30, TimeUnit.SECONDS));
+	private Map<String, List<Comment>> COMMENT_CACHE = Collections.synchronizedMap(new PassiveExpiringMap<>(30, TimeUnit.SECONDS));
 	
 	public List<Issue> getIssues(T info) {
-		return CACHE.computeIfAbsent(info, this::doGetIssues);
+		return ISSUE_CACHE.computeIfAbsent(info, this::doGetIssues);
 	}
 	protected abstract List<Issue> doGetIssues(T info);
+	
+	public List<Comment> getComments(T info, String issueId) {
+		return COMMENT_CACHE.computeIfAbsent(info+issueId, (key) -> this.doGetComments(info, issueId));
+	}
+	protected abstract List<Comment> doGetComments(T info, String issueId);
 }

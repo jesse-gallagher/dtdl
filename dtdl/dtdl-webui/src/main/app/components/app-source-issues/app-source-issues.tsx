@@ -61,7 +61,7 @@ export class AppSourceIssues {
     refreshIssues() {
         try {
             this.updating = true;
-            const url = new URL("$darwino-app/issues/" + encodeURIComponent(this.match.params.sourceId), this.httpBase);
+            const url = new URL("$darwino-app/sources/" + encodeURIComponent(this.match.params.sourceId) + "/issues", this.httpBase);
             fetch(url.toString(), { credentials: 'include' })
                 .then(r => r.json())
                 .then(json => {
@@ -124,7 +124,7 @@ export class AppSourceIssues {
                         </table>
                     </div>
                     <div class="col-md-6 col-sm-12">
-                         <app-issue-info issue={this.activeIssue}></app-issue-info>
+                         <app-issue-info issue={this.activeIssue} sourceId={this.match.params.sourceId}></app-issue-info>
                     </div>
                 </div>
             </div>

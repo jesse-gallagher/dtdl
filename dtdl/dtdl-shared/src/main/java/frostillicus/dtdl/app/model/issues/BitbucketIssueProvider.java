@@ -33,7 +33,9 @@ import com.darwino.commons.json.JsonObject;
 import com.darwino.commons.util.StringUtil;
 
 import frostillicus.dtdl.app.beans.MarkdownBean;
+import frostillicus.dtdl.app.model.bitbucket.BitbucketComment;
 import frostillicus.dtdl.app.model.bitbucket.BitbucketIssue;
+import frostillicus.dtdl.app.model.bitbucket.UserInfo;
 import frostillicus.dtdl.app.model.info.BitbucketInfo;
 import frostillicus.dtdl.app.model.util.ModelUtil;
 import lombok.SneakyThrows;
@@ -44,6 +46,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 	public static final String API_BASE = "https://api.bitbucket.org/1.0"; //$NON-NLS-1$
 	public static final String REPOSITORIES_RESOURCE = "repositories"; //$NON-NLS-1$
 	public static final String ISSUES_RESOURCE = "issues"; //$NON-NLS-1$
+	public static final String COMMENTS_RESOURCE = "comments"; //$NON-NLS-1$
 	
 	@Inject
 	private MarkdownBean markdown;
@@ -62,6 +65,23 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		
 		List<Issue> result = new LinkedList<>();
 		fetch(result, client, org, repo, 0);
+		return result;
+	}
+	
+	@Override
+	protected List<Comment> doGetComments(BitbucketInfo info, String issueId) {
+		HttpClient client = getBitbucketClient(info);
+		
+		String repository = StringUtil.toString(info.getRepository());
+		int slashIndex = repository.indexOf('/');
+		if(slashIndex < 1 || slashIndex == repository.length()-1) {
+			throw new IllegalArgumentException("Repository must contain an organization and a repository: " + repository);
+		}
+		String org = repository.substring(0, slashIndex);
+		String repo = repository.substring(slashIndex+1);
+		
+		List<Comment> result = new LinkedList<>();
+		fetchComments(result, client, org, repo, issueId);
 		return result;
 	}
 
@@ -137,7 +157,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		String content = issue.getContent();
 		String html = markdown.toHtml(content);
 
-		BitbucketIssue.UserInfo responsible = issue.getResponsible();
+		UserInfo responsible = issue.getResponsible();
 		Person assignee = null;
 		if(responsible != null) {
 			String name = responsible.getDisplayName();
@@ -166,6 +186,51 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 			.version(version)
 			.body(html)
 			.assignedTo(assignee)
+			.build();
+	}
+	
+	@SneakyThrows
+	private void fetchComments(List<Comment> result, HttpClient client, String org, String repo, String issueId) {
+		Object jsonObj = client.getAsJson(new String[] { REPOSITORIES_RESOURCE, org, repo, ISSUES_RESOURCE, issueId, COMMENTS_RESOURCE });
+		if(!(jsonObj instanceof JsonArray)) {
+			throw new IllegalStateException("Received unexpected JSON response: " + jsonObj);
+		}
+		JsonArray comments = (JsonArray)jsonObj;
+		
+		comments.stream()
+			.map(this::createComment)
+			.forEach(result::add);
+	}
+	
+	private Comment createComment(Object obj) {
+		if(!(obj instanceof JsonObject)) {
+			throw new IllegalStateException("Received unexpected comment JSON: " + obj);
+		}
+		JsonObject json = (JsonObject)obj;
+		BitbucketComment comment = ModelUtil.toEntity(json, BitbucketComment.class);
+		
+		UserInfo u = comment.getAuthor();
+		Person postedBy = null;
+		if(u != null) {
+			String postedByUrl = null;
+			String uUri = u.getResourceUri();
+			if(StringUtil.isNotEmpty(uUri)) {
+				postedByUrl = "https://bitbucket.org" + uUri.substring("/1.0".length()); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			postedBy = Person.builder()
+				.name(u.getDisplayName())
+				.avatarUrl(u.getAvatar())
+				.url(postedByUrl)
+				.build();
+		}
+
+		String content = comment.getContent();
+		String html = markdown.toHtml(content);
+		
+		return Comment.builder()
+			.id(StringUtil.toString(comment.getCommentId()))
+			.postedBy(postedBy)
+			.body(html)
 			.build();
 	}
 	

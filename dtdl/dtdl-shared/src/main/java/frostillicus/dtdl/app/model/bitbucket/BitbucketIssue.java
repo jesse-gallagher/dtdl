@@ -31,17 +31,6 @@ import lombok.Data;
 public class BitbucketIssue {
 	
 	@Embeddable @Data
-	public static class UserInfo {
-		@Column private String username;
-		@Column("first_name") private String firstName;
-		@Column("last_name") private String lastName;
-		@Column("display_name") private String displayName;
-		@Column("is_staff") private boolean staff;
-		@Column private String avatar;
-		@Column("resource_uri") private String resourceUri;
-		@Column("is_team") private boolean team;
-	}
-	@Embeddable @Data
 	public static class Metadata {
 		@Column private String kind;
 		@Column private String version;

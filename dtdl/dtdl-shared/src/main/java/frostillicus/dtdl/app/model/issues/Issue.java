@@ -48,7 +48,7 @@ public class Issue {
 		@Column private String url;
 	}
 	
-	@Column String id;
+	@Column private String id;
 	@Column private String title;
 	@Column private String url;
 	@Column private Status status;

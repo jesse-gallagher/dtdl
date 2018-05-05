@@ -82,14 +82,20 @@ public class Source {
 		if(type == null) {
 			return Collections.emptyList();
 		}
+		return type.getIssueProvider().getIssues(getInfoHolder());
+	}
+	
+	public InfoHolder getInfoHolder() {
+		if(type == null) {
+			return null;
+		}
 		switch(type) {
 		case GITHUB:
-			return type.getIssueProvider().getIssues(github);
+			return github;
 		case BITBUCKET:
-			return type.getIssueProvider().getIssues(bitbucket);
+			return bitbucket;
 		default:
-			return Collections.emptyList();
+			return null;
 		}
-		
 	}
 }

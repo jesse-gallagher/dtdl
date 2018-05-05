@@ -14,14 +14,49 @@
 /// limitations under the License.
 ///
 
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, State, Watch } from '@stencil/core';
 
 @Component({
     tag: 'app-issue-info',
     styleUrl: 'app-issue-info.css'
 })
 export class AppIssueInfo {
+    @Prop({ context: 'httpBase' }) private httpBase: string;
     @Prop() issue:any;
+    @Prop() sourceId:any;
+    
+    @State() private comments:Array<any>;
+    @State() private updating: boolean;
+    
+    componentDidLoad() {
+        this.refreshComments();
+    }
+    
+    @Watch("issue")
+    matchHandler(newValue:any, oldValue:any) {
+        this.refreshComments();
+    }
+    
+    refreshComments() {
+        if(!this.issue) {
+            return;
+        }
+        try {
+            this.updating = true;
+            const url = new URL("$darwino-app/sources/" + encodeURIComponent(this.sourceId) + "/issues/" + encodeURIComponent(this.issue.id) + "/comments", this.httpBase);
+            fetch(url.toString(), { credentials: 'include' })
+                .then(r => r.json())
+                .then(json => {
+                    this.updating = false;
+                    this.comments = json.payload;
+                })
+                .catch(e => {
+                    console.error("Error while connecting to server", e);
+                })
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     render() {
         if(!this.issue) {
@@ -35,9 +70,11 @@ export class AppIssueInfo {
                 <h3>{issue.status}</h3>
                 <h4><a href={issue.url} target="_blank">{issue.url}</a></h4>
                 {this.renderIssueTags(issue)}
-                {this.renderAssignee(issue)}
+                {this.renderName(issue.assignedTo)}
                 <hr />
                 <div innerHTML={issue.body}></div>
+                <hr />
+                {this.renderComments()}
             </div>
         );
     }
@@ -56,12 +93,31 @@ export class AppIssueInfo {
         }
     }
     
-    renderAssignee(issue:any):any {
-        if(!issue.assignedTo) {
+    renderName(user:any):any {
+        if(!user) {
             return null;
         } else {
-            const assignee = issue.assignedTo;
-            return <a href={assignee.url}><img class='inline-avatar' src={assignee.avatarUrl} />{assignee.name}</a>
+            return <a href={user.url}><img class='inline-avatar' src={user.avatarUrl} />{user.name}</a>
         }
+    }
+    
+    renderComments():any {
+        if(!this.issue) {
+            return null;
+        }
+        if(!this.comments) {
+            return null;
+        }
+        
+        return (
+            <div class="comments">
+                {this.comments.map(comment =>
+                    <div class="comment">
+                        <p>{this.renderName(comment.postedBy)}</p>
+                        <div innerHTML={comment.body}></div>
+                    </div>
+                )}
+            </div>
+        )
     }
 }

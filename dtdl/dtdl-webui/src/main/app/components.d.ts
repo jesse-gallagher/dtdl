@@ -100,6 +100,7 @@ declare global {
   namespace StencilComponents {
     interface AppIssueInfo {
       'issue': any;
+      'sourceId': any;
     }
   }
 
@@ -123,6 +124,7 @@ declare global {
   namespace JSXElements {
     export interface AppIssueInfoAttributes extends HTMLAttributes {
       'issue'?: any;
+      'sourceId'?: any;
     }
   }
 }

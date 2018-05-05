@@ -23,6 +23,7 @@ import com.darwino.commons.services.rest.RestServiceBinder;
 import com.darwino.commons.services.rest.RestServiceFactory;
 import com.darwino.platform.DarwinoHttpConstants;
 
+import frostillicus.dtdl.app.model.services.CommentListService;
 import frostillicus.dtdl.app.model.services.IssueListService;
 import frostillicus.dtdl.app.model.services.ModelListService;
 import frostillicus.dtdl.app.model.services.ModelObjectService;
@@ -60,11 +61,19 @@ public class AppRestServiceFactory extends RestServiceFactory {
 			}
 		});
 		
-		binders.add(new RestServiceBinder("issues", null) { //$NON-NLS-1$
+		binders.add(new RestServiceBinder("sources", null, "issues") { //$NON-NLS-1$ //$NON-NLS-2$
 			@Override
 			public HttpService createService(HttpServiceContext context, String[] parts) {
 				String sourceId = parts[1];
 				return new IssueListService(sourceId);
+			}
+		});
+		binders.add(new RestServiceBinder("sources", null, "issues", null, "comments") {//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			@Override
+			public HttpService createService(HttpServiceContext context, String[] parts) {
+				String sourceId = parts[1];
+				String issueId = parts[3];
+				return new CommentListService(sourceId, issueId);
 			}
 		});
 	}	

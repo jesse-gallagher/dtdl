@@ -56,6 +56,24 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 			.collect(Collectors.toList());
 	}
 	
+	@Override
+	@SneakyThrows
+	protected List<Comment> doGetComments(GitHubInfo info, String issueId) {
+		GitHubClient client = new GitHubClient();
+		client.setOAuth2Token(info.getToken());
+		
+		IssueService service = new IssueService(client);
+		RepositoryId repoId = RepositoryId.createFromId(info.getRepository());
+		
+		return service.getComments(repoId, issueId).stream()
+			.map(this::createComment)
+			.collect(Collectors.toList());
+	}
+
+	// *******************************************************************************
+	// * Internal utility methods
+	// *******************************************************************************
+	
 	private Issue createIssue(org.eclipse.egit.github.core.Issue i) {
 		String state = StringUtil.toString(i.getState());
 		Issue.Status status;
@@ -104,6 +122,29 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 			.version(version)
 			.assignedTo(assignedTo)
 			.body(html)
+			.build();
+	}
+	
+	private Comment createComment(org.eclipse.egit.github.core.Comment c) {
+		org.eclipse.egit.github.core.User u = c.getUser();
+		Person postedBy = null;
+		if(u != null) {
+			postedBy = Person.builder()
+				.name(u.getLogin())
+				.avatarUrl(u.getAvatarUrl())
+				.url(u.getUrl())
+				.build();
+		}
+
+		String content = c.getBody();
+		String html = markdown.toHtml(content);
+		
+		return Comment.builder()
+			.id(StringUtil.toString(c.getId()))
+			.postedBy(postedBy)
+			.body(html)
+			.createdAt(c.getCreatedAt())
+			.updatedAt(c.getUpdatedAt())
 			.build();
 	}
 	
