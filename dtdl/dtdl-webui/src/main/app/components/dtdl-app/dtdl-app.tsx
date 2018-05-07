@@ -37,7 +37,7 @@ export class DTDLApp {
                         </nav>
 
                         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                            <stencil-router>
+                            <stencil-router historyType="hash">
                                 <stencil-route url='/' component='app-home' exact={true} />
 
                                 <stencil-route url='/sources' component='app-source-list' exact={true} />
