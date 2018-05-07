@@ -15,6 +15,7 @@
  */
 package frostillicus.dtdl.app.model.issues;
 
+import java.util.Date;
 import java.util.List;
 
 import org.jnosql.artemis.Column;
@@ -57,4 +58,5 @@ public class Issue {
 	@Column private String body;
 	@Column private Person assignedTo;
 	@Column private Person reportedBy;
+	@Column private Date createdAt;
 }

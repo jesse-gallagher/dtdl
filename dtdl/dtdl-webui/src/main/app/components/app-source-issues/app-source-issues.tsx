@@ -16,6 +16,7 @@
 
 import { Component, Prop, State, Watch } from '@stencil/core';
 import { MatchResults } from '@stencil/router';
+import moment from 'moment';
 
 @Component({
     tag: 'app-source-issues',
@@ -95,7 +96,7 @@ export class AppSourceIssues {
                 <span class='issue-title'>{issue.title}</span>
                 <span class='issue-status'>{issue.status}</span>
                 <span class='issue-reporter'><app-user user={issue.reportedBy} /></span>
-                <span class='issue-date'>{issue.createdAt}</span>
+                <span class='issue-date'>{moment(issue.createdAt).calendar()}</span>
             </div>)
         });
     }

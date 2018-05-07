@@ -132,6 +132,7 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 			.version(version)
 			.assignedTo(assignedTo)
 			.reportedBy(reportedBy)
+			.createdAt(i.getCreatedAt())
 			.body(html)
 			.build();
 	}

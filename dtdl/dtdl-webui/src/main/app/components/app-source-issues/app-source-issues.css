@@ -22,7 +22,7 @@
 	
 	position: relative;
 	padding: 0.5em;
-	padding-right: 2em;
+	padding-right: 8em;
 }
 .issue-list .active a {
 	color: white;
@@ -41,6 +41,13 @@
 	color: white;
 }
 
+.issue-date {
+	position: absolute;
+	top: 1.25em;
+	right: 0.25em;
+	color: grey;
+}
+
 .issue-title {
 	font-weight: bold;
 }
@@ -53,9 +60,4 @@
 
 .issue + .issue {
 	border-top: 1px solid lightgrey;
-}
-
-/* TODO: finish this */
-.issue-date {
-	display: none;
 }
