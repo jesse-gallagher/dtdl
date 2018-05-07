@@ -13,20 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package frostillicus.dtdl.app.model.issues;
+.issue-list .active {
+	background-color: #007bff;
+	color: white;
+}
+.issue-list .issue {
+	cursor: pointer;
+	
+	position: relative;
+	padding: 0.5em;
+	padding-right: 2em;
+}
+.issue-list .active a {
+	color: white;
+}
 
-import org.jnosql.artemis.Column;
-import org.jnosql.artemis.Embeddable;
+.issue-id {
+	position: absolute;
+	top: 0.25em;
+	right: 0.25em;
+	color: grey;
+}
+.issue-id:before {
+	content: '#';
+}
+.active .issue-id {
+	color: white;
+}
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+.issue-title {
+	font-weight: bold;
+}
+.issue-reporter {
+	display: block;
+}
+.issue-status {
+	display: none;
+}
 
-@Embeddable @Data @Builder
-@NoArgsConstructor @AllArgsConstructor
-public class Person {
-	@Column private String name;
-	@Column private String avatarUrl;
-	@Column private String url;
+.issue + .issue {
+	border-top: 1px solid lightgrey;
+}
+
+/* TODO: finish this */
+.issue-date {
+	display: none;
 }

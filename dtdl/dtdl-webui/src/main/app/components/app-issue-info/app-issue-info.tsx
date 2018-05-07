@@ -70,7 +70,7 @@ export class AppIssueInfo {
                 <h3>{issue.status}</h3>
                 <h4><a href={issue.url} target="_blank">{issue.url}</a></h4>
                 {this.renderIssueTags(issue)}
-                {this.renderName(issue.assignedTo)}
+                <app-user user={issue.assignedTo} />
                 <hr />
                 <div innerHTML={issue.body}></div>
                 <hr />
@@ -93,14 +93,6 @@ export class AppIssueInfo {
         }
     }
     
-    renderName(user:any):any {
-        if(!user) {
-            return null;
-        } else {
-            return <a href={user.url}><img class='inline-avatar' src={user.avatarUrl} />{user.name}</a>
-        }
-    }
-    
     renderComments():any {
         if(!this.issue) {
             return null;
@@ -113,7 +105,7 @@ export class AppIssueInfo {
             <div class="comments">
                 {this.comments.map(comment =>
                     <div class="comment">
-                        <p>{this.renderName(comment.postedBy)}</p>
+                        <p><app-user user={comment.postedBy}/></p>
                         <div innerHTML={comment.body}></div>
                     </div>
                 )}

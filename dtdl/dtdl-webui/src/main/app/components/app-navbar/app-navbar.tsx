@@ -17,7 +17,8 @@
 import { Component, State, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'app-navbar'
+  tag: 'app-navbar',
+  styleUrl: 'app-navbar.css'
 })
 export class AppNavBar {
     // TODO consolidate into a parent class
@@ -59,12 +60,6 @@ export class AppNavBar {
     render() {
         return (
             <ul class="nav flex-column">
-                <li class="nav-item">
-                    <stencil-route-link url='/' class="nav-link" activeClass="active">Home</stencil-route-link>
-                </li>
-                <li class="nav-item">
-                    <hr />
-                </li>
                 {this.renderSources()}
                 <li class="nav-item">
                     <hr />

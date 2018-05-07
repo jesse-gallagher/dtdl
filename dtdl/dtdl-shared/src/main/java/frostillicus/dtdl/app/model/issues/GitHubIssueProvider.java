@@ -110,6 +110,16 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 				.build();
 		}
 		
+		org.eclipse.egit.github.core.User r = i.getUser();
+		Person reportedBy = null;
+		if(r != null) {
+			reportedBy = Person.builder()
+				.name(r.getLogin())
+				.avatarUrl(r.getAvatarUrl())
+				.url(r.getUrl())
+				.build();
+		}
+		
 		String content = i.getBody();
 		String html = markdown.toHtml(content);
 		
@@ -121,6 +131,7 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 			.tags(tags)
 			.version(version)
 			.assignedTo(assignedTo)
+			.reportedBy(reportedBy)
 			.body(html)
 			.build();
 	}

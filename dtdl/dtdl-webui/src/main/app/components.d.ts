@@ -232,6 +232,41 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface AppUser {
+      'link': boolean;
+      'user': any;
+    }
+  }
+
+  interface HTMLAppUserElement extends StencilComponents.AppUser, HTMLStencilElement {}
+
+  var HTMLAppUserElement: {
+    prototype: HTMLAppUserElement;
+    new (): HTMLAppUserElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-user': HTMLAppUserElement;
+  }
+  interface ElementTagNameMap {
+    'app-user': HTMLAppUserElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-user': JSXElements.AppUserAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppUserAttributes extends HTMLAttributes {
+      'link'?: boolean;
+      'user'?: any;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface DtdlApp {
 
     }

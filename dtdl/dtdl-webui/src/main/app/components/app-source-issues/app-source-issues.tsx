@@ -18,7 +18,8 @@ import { Component, Prop, State, Watch } from '@stencil/core';
 import { MatchResults } from '@stencil/router';
 
 @Component({
-    tag: 'app-source-issues'
+    tag: 'app-source-issues',
+    styleUrl: 'app-source-issues.css'
 })
 export class AppSourceIssues {
     @Prop({ context: 'httpBase' }) private httpBase: string;
@@ -89,16 +90,19 @@ export class AppSourceIssues {
                     issue.version.name :
                     null;
             
-            return (<tr>
-                <td>{issue.id}</td>
-                <td>
-                    <a href='javascript:void(0)' onClick={() => this.activeIssue = issue}>{issue.title}</a>
-                </td>
-                <td>{issue.status}</td>
-            </tr>)
+            return (<div class={this.activeIssue == issue ? 'issue active' : 'issue'} onClick={() => this.selectIssue(issue)}>
+                <span class='issue-id'>{issue.id}</span>
+                <span class='issue-title'>{issue.title}</span>
+                <span class='issue-status'>{issue.status}</span>
+                <span class='issue-reporter'><app-user user={issue.reportedBy} /></span>
+                <span class='issue-date'>{issue.createdAt}</span>
+            </div>)
         });
     }
     
+    selectIssue(issue:any) {
+        this.activeIssue = issue
+    }
 
     render() {
         if (this.source == null) {
@@ -109,21 +113,10 @@ export class AppSourceIssues {
                 <h2>{this.source.title}</h2>
                 
                 <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <table class="table table-striped table-sm tab2le-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.renderIssues()}
-                            </tbody>
-                        </table>
+                    <div class="col-md-5 col-sm-12 issue-list">
+                        {this.renderIssues()}
                     </div>
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-7 col-sm-12">
                          <app-issue-info issue={this.activeIssue} sourceId={this.match.params.sourceId}></app-issue-info>
                     </div>
                 </div>
