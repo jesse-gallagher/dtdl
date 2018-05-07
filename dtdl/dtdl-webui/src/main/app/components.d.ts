@@ -132,7 +132,6 @@ declare global {
 
   namespace StencilComponents {
     interface AppIssueInfo {
-      'createNew': boolean;
       'issue': any;
       'match': MatchResults;
       'sourceId': any;
@@ -158,7 +157,6 @@ declare global {
   }
   namespace JSXElements {
     export interface AppIssueInfoAttributes extends HTMLAttributes {
-      'createNew'?: boolean;
       'issue'?: any;
       'match'?: MatchResults;
       'sourceId'?: any;
