@@ -39,6 +39,7 @@
 		<module>dtdl-j2ee</module>
 		<module>dtdl-mobile</module>
 		<module>dtdl-swt-hybrid</module>
+		<module>dtdl-swt-native</module>
 	</modules>
 	
 	<prerequisites>
