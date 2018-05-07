@@ -13,7 +13,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-img {
+.issue-info img {
 	max-width: 100%;
 	height: auto;
+}
+
+.issue-box {
+	background-color: white;
+	border: 1px solid lightgrey;
+	box-shadow: 0 0.5em 1em 0.1em rgba(0, 0, 0, 0.1);
+	margin-bottom: 2em;
+	padding: 1em;
+	
+	position: relative;
+}
+
+.issue-info .issue-title {
+	font-weight: bold;
+	display: block;
+}
+.issue-info .issue-title:before {
+	content: "Title: ";
+	font-weight: normal;
+	color: grey;
+}
+.issue-info .issue-id {
+	position: absolute;
+	top: 0.25em;
+	right: 0.5em;
+	color: grey;
+}
+.issue-info .issue-id:before {
+	content: '#';
+}
+.issue-info .issue-status {
+	display: block;
+}
+.issue-info .issue-status:before {
+	content: "Status: ";
+	color: grey;
+}
+
+.issue-box .box-header {
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 0.5em;
+}
+.issue-info .issue-date {
+	color: grey;
+	margin-left: 1em;
 }

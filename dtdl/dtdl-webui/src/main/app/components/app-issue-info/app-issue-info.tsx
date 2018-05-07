@@ -15,20 +15,29 @@
 ///
 
 import { Component, Prop, State, Watch } from '@stencil/core';
+import { MatchResults } from '@stencil/router';
 
 @Component({
     tag: 'app-issue-info',
-    styleUrl: 'app-issue-info.css'
+    styleUrl: 'app-issue-info.css',
+    shadow: true
 })
 export class AppIssueInfo {
     @Prop({ context: 'httpBase' }) private httpBase: string;
+    @Prop() match: MatchResults;
+    
     @Prop() issue:any;
     @Prop() sourceId:any;
+    @Prop() createNew = false;
     
     @State() private comments:Array<any>;
     @State() private updating: boolean;
     
     componentDidLoad() {
+        if(this.createNew) {
+            this.issue = {};
+        }
+        
         this.refreshComments();
     }
     
@@ -38,7 +47,7 @@ export class AppIssueInfo {
     }
     
     refreshComments() {
-        if(!this.issue) {
+        if(!this.issue || this.createNew) {
             return;
         }
         try {
@@ -65,15 +74,21 @@ export class AppIssueInfo {
         const issue = this.issue;
         
         return (
-            <div class="issue">
-                <h2>#{issue.id} - {issue.title}</h2>
-                <h3>{issue.status}</h3>
-                <h4><a href={issue.url} target="_blank">{issue.url}</a></h4>
-                {this.renderIssueTags(issue)}
-                <app-user user={issue.assignedTo} />
-                <hr />
-                <div innerHTML={issue.body}></div>
-                <hr />
+            <div class="issue-info">
+                <div class='issue-box'>
+                    <span class='issue-title'>{issue.title}</span>
+                    <span class='issue-id'>{issue.id}</span>
+                    <span class='issue-status'>{issue.status}</span>
+                    <span class='issue-tags'>{this.renderIssueTags(issue)}</span>
+                    <span class='issue-assignee'><app-user user={issue.assignedTo} /></span>
+                </div>
+                <div class='issue-box'>
+                    <div class='box-header'>
+                        <span class='issue-reporter'><app-user user={issue.reportedBy} /></span>
+                        <span class='issue-date'>Filed <app-date value={issue.createdAt}/></span>
+                    </div>
+                    <div innerHTML={issue.body}></div>
+                </div>
                 {this.renderComments()}
             </div>
         );
@@ -104,7 +119,7 @@ export class AppIssueInfo {
         return (
             <div class="comments">
                 {this.comments.map(comment =>
-                    <div class="comment">
+                    <div class="comment issue-box">
                         <p><app-user user={comment.postedBy}/></p>
                         <div innerHTML={comment.body}></div>
                     </div>

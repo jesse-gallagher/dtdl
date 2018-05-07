@@ -32,6 +32,39 @@ import {
 declare global {
 
   namespace StencilComponents {
+    interface AppDate {
+      'value': any;
+    }
+  }
+
+  interface HTMLAppDateElement extends StencilComponents.AppDate, HTMLStencilElement {}
+
+  var HTMLAppDateElement: {
+    prototype: HTMLAppDateElement;
+    new (): HTMLAppDateElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-date': HTMLAppDateElement;
+  }
+  interface ElementTagNameMap {
+    'app-date': HTMLAppDateElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-date': JSXElements.AppDateAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppDateAttributes extends HTMLAttributes {
+      'value'?: any;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface AppEditSource {
       'match': MatchResults;
     }
@@ -99,7 +132,9 @@ declare global {
 
   namespace StencilComponents {
     interface AppIssueInfo {
+      'createNew': boolean;
       'issue': any;
+      'match': MatchResults;
       'sourceId': any;
     }
   }
@@ -123,7 +158,9 @@ declare global {
   }
   namespace JSXElements {
     export interface AppIssueInfoAttributes extends HTMLAttributes {
+      'createNew'?: boolean;
       'issue'?: any;
+      'match'?: MatchResults;
       'sourceId'?: any;
     }
   }

@@ -28,36 +28,44 @@
 	color: white;
 }
 
-.issue-id {
+.issue-list .issue-id {
 	position: absolute;
 	top: 0.25em;
 	right: 0.25em;
 	color: grey;
 }
-.issue-id:before {
+.issue-list .issue-id:before {
 	content: '#';
 }
-.active .issue-id {
+.issue-list .active .issue-id {
 	color: white;
 }
 
-.issue-date {
+.issue-list .issue-date {
 	position: absolute;
 	top: 1.25em;
 	right: 0.25em;
 	color: grey;
 }
+.issue-list .active .issue-date {
+	color: white;
+}
 
-.issue-title {
+.issue-list .issue-title {
 	font-weight: bold;
 }
-.issue-reporter {
+.issue-list .issue-reporter {
 	display: block;
 }
-.issue-status {
+.issue-list .issue-status {
 	display: none;
 }
 
-.issue + .issue {
+.issue-list .issue + .issue {
 	border-top: 1px solid lightgrey;
+}
+
+.issue-list .issue-pane {
+	background-color: #f9f9f9;
+	padding: 1em;
 }

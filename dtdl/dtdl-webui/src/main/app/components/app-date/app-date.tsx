@@ -15,26 +15,18 @@
 ///
 
 import { Component, Prop, State, Watch } from '@stencil/core';
+import moment from 'moment';
 
 @Component({
-    tag: 'app-user',
-    styleUrl: 'app-user.css',
-    shadow: true
+    tag: 'app-date'
 })
-export class AppUser {
-    @Prop() private user: any;
-    @Prop() private link = false;
+export class AppDate {
+    @Prop() private value: any;
 
     render() {
-        if (!this.user) {
+        if (!this.value) {
             return null;
         }
-        const user = this.user;
-
-        if (this.link) {
-            return <a href={user.url} class='username'><img class='inline-avatar' src={user.avatarUrl} />{user.name}</a>;
-        } else {
-            return <span class='username'><img class='inline-avatar' src={user.avatarUrl} />{user.name}</span>;
-        }
+        return <span class='moment-date'>{moment(this.value).calendar()}</span>;
     }
 }

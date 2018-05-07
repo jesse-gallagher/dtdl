@@ -16,3 +16,7 @@
 .username .inline-avatar {
 	margin-right: 0.5em;
 }
+.inline-avatar {
+	max-height: 1em;
+	width: auto;
+}

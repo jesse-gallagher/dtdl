@@ -109,8 +109,3 @@ stencil-route-link a {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-.inline-avatar {
-	max-height: 1em;
-	width: auto;
-}
