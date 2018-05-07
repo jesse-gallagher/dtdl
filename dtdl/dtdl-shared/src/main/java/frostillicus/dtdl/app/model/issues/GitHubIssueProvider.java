@@ -52,7 +52,7 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 		Map<String, String> filterData = new HashMap<>();
 		filterData.put("filter", "all"); //$NON-NLS-1$ //$NON-NLS-2$
 		return service.getIssues(repoId, filterData).stream()
-			.map(this::createIssue)
+			.map(this::toIssue)
 			.collect(Collectors.toList());
 	}
 	
@@ -66,15 +66,43 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 		RepositoryId repoId = RepositoryId.createFromId(info.getRepository());
 		
 		return service.getComments(repoId, issueId).stream()
-			.map(this::createComment)
+			.map(this::toComment)
 			.collect(Collectors.toList());
+	}
+	
+	@Override
+	@SneakyThrows
+	public void createIssue(GitHubInfo info, Issue issue) {
+		GitHubClient client = new GitHubClient();
+		client.setOAuth2Token(info.getToken());
+		
+		IssueService service = new IssueService(client);
+		RepositoryId repoId = RepositoryId.createFromId(info.getRepository());
+		
+		org.eclipse.egit.github.core.Issue i = new org.eclipse.egit.github.core.Issue();
+		/*
+		 * 			.id(StringUtil.toString(i.getNumber()))
+			.title(i.getTitle())
+			.url(i.getHtmlUrl())
+			.status(status)
+			.tags(tags)
+			.version(version)
+			.assignedTo(assignedTo)
+			.reportedBy(reportedBy)
+			.createdAt(i.getCreatedAt())
+			.body(html)
+			.build();
+		 */
+		i.setTitle(issue.getTitle());
+		i.setBody(issue.getBody());
+		service.createIssue(repoId, i);
 	}
 
 	// *******************************************************************************
 	// * Internal utility methods
 	// *******************************************************************************
 	
-	private Issue createIssue(org.eclipse.egit.github.core.Issue i) {
+	private Issue toIssue(org.eclipse.egit.github.core.Issue i) {
 		String state = StringUtil.toString(i.getState());
 		Issue.Status status;
 		switch(state) {
@@ -137,7 +165,7 @@ public class GitHubIssueProvider extends AbstractIssueProvider<GitHubInfo> {
 			.build();
 	}
 	
-	private Comment createComment(org.eclipse.egit.github.core.Comment c) {
+	private Comment toComment(org.eclipse.egit.github.core.Comment c) {
 		org.eclipse.egit.github.core.User u = c.getUser();
 		Person postedBy = null;
 		if(u != null) {

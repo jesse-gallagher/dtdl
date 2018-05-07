@@ -104,8 +104,12 @@ export class AppSourceIssues {
         this.activeIssue = issue
     }
     
+    createNewIssue() {
+        this.activeIssue = {};
+    }
+    
     renderIssueInfo() {
-        if(this.activeIssue) {
+        if(this.activeIssue !== null) {
             return <app-issue-info issue={this.activeIssue} sourceId={this.match.params.sourceId}></app-issue-info>;
         } else {
             return null;
@@ -122,6 +126,13 @@ export class AppSourceIssues {
                 
                 <div class="row">
                     <div class="col-md-5 col-sm-12 issue-list">
+                
+                        {/*<div class="row">
+                            <div class="col-sm-12 align-right">
+                                <button onClick={() => this.createNewIssue()} class='btn btn-info'>New</button>
+                            </div>
+                        </div>*/}
+                        
                         {this.renderIssues()}
                     </div>
                     <div class="col-md-7 col-sm-12">

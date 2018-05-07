@@ -37,4 +37,6 @@ public abstract class AbstractIssueProvider<T extends InfoHolder> {
 		return COMMENT_CACHE.computeIfAbsent(info+issueId, (key) -> this.doGetComments(info, issueId));
 	}
 	protected abstract List<Comment> doGetComments(T info, String issueId);
+	
+	public abstract void createIssue(T info, Issue issue);
 }

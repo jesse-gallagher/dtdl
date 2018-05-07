@@ -26,18 +26,13 @@ export class AppIssueInfo {
     @Prop({ context: 'httpBase' }) private httpBase: string;
     @Prop() match: MatchResults;
     
-    @Prop() issue:any;
+    @Prop() issue:any = null;
     @Prop() sourceId:any;
-    @Prop() createNew = false;
     
     @State() private comments:Array<any>;
     @State() private updating: boolean;
     
     componentDidLoad() {
-        if(this.createNew) {
-            this.issue = {};
-        }
-        
         this.refreshComments();
     }
     
@@ -46,8 +41,12 @@ export class AppIssueInfo {
         this.refreshComments();
     }
     
+    isNew():boolean {
+        return this.issue != null && !this.issue.id;
+    }
+    
     refreshComments() {
-        if(!this.issue || this.createNew) {
+        if(!this.issue || this.isNew()) {
             return;
         }
         try {
@@ -68,7 +67,7 @@ export class AppIssueInfo {
     }
 
     render() {
-        if(!this.issue) {
+        if(this.issue === null) {
             return null;
         }
         const issue = this.issue;

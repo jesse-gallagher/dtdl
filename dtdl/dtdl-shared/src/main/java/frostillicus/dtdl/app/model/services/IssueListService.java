@@ -15,6 +15,8 @@
  */
 package frostillicus.dtdl.app.model.services;
 
+import static frostillicus.dtdl.app.model.services.ServiceUtil.ok;
+
 import java.util.stream.Collectors;
 
 import javax.enterprise.inject.spi.CDI;
@@ -29,6 +31,7 @@ import com.darwino.commons.services.AbstractHttpService;
 import com.darwino.commons.services.HttpServiceContext;
 
 import frostillicus.dtdl.app.model.Source;
+import frostillicus.dtdl.app.model.issues.Issue;
 import frostillicus.dtdl.app.model.util.ModelUtil;
 import lombok.AllArgsConstructor;
 
@@ -55,5 +58,22 @@ public class IssueListService extends AbstractHttpService {
 				.map(EntityConverter::convert)
 				.collect(Collectors.toList())
 		));
+	}
+	
+	@Override
+	protected void doPost(HttpServiceContext context) throws Exception {
+		@SuppressWarnings("unchecked")
+		Repository<Source, Object> repository = (Repository<Source, Object>)ModelUtil.getRepository(Source.class);
+		if(repository == null) {
+			throw new NullPointerException("Could not find repository for class " + Source.class.getName()); //$NON-NLS-1$
+		}
+		
+		Source source = repository.findById(sourceId).orElseThrow(() -> new RuntimeException("Could not find source for ID " + sourceId)); //$NON-NLS-1$
+		
+		Object newModel = context.getContentAsJson();
+		Issue issue = ModelUtil.toEntity((JsonObject)newModel, Issue.class);
+		source.getType().getIssueProvider().createIssue(source.getInfoHolder(), issue);
+		
+		ok(context, issue.toString());
 	}
 }

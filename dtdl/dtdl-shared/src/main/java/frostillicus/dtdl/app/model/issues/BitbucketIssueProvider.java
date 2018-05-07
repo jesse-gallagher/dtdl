@@ -30,6 +30,7 @@ import com.darwino.commons.httpclnt.HttpClient;
 import com.darwino.commons.httpclnt.HttpClientService;
 import com.darwino.commons.json.JsonArray;
 import com.darwino.commons.json.JsonObject;
+import com.darwino.commons.util.NotImplementedException;
 import com.darwino.commons.util.StringUtil;
 
 import frostillicus.dtdl.app.beans.MarkdownBean;
@@ -83,6 +84,11 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		List<Comment> result = new LinkedList<>();
 		fetchComments(result, client, org, repo, issueId);
 		return result;
+	}
+	
+	@Override
+	public void createIssue(BitbucketInfo info, Issue issue) {
+		throw new NotImplementedException();
 	}
 
 	// *******************************************************************************
