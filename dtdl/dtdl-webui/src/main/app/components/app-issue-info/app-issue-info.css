@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+.issue-info {
+	height: calc(100vh - 48px);
+	overflow-y: auto;
+	width: 100%;
+}
 .issue-info img {
 	max-width: 100%;
 	height: auto;
