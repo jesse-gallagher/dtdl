@@ -32,7 +32,7 @@ public class BitbucketComment {
 	@Column("author_info") private UserInfo author;
 	@Column("comment_id") private long commentId;
 	@Column("convert_markup") private boolean convertMarkup;
-	@Column("utc_updated_on") private String utcUpdatedOn;
-	@Column("utc_created_on") private String utcCreatedOn;
+	@Column("utc_updated_on") private String updatedUtc;
+	@Column("utc_created_on") private String createdUtc;
 	@Column("is_span") private boolean spam;
 }

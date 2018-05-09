@@ -65,6 +65,39 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface AppDatetime {
+      'value': any;
+    }
+  }
+
+  interface HTMLAppDatetimeElement extends StencilComponents.AppDatetime, HTMLStencilElement {}
+
+  var HTMLAppDatetimeElement: {
+    prototype: HTMLAppDatetimeElement;
+    new (): HTMLAppDatetimeElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-datetime': HTMLAppDatetimeElement;
+  }
+  interface ElementTagNameMap {
+    'app-datetime': HTMLAppDatetimeElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-datetime': JSXElements.AppDatetimeAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppDatetimeAttributes extends HTMLAttributes {
+      'value'?: any;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface AppEditSource {
       'match': MatchResults;
     }

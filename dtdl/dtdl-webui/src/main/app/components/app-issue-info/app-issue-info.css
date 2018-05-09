@@ -68,6 +68,20 @@
 	color: grey;
 }
 
+.issue-info .issue-tags {
+	display: block;
+}
+.issue-info .issue-tags:before {
+	content: "Tags: ";
+	color: grey;
+}
+.issue-info .issue-tags .badge {
+	padding: 0.1em 0.25em;
+}
+.issue-info .issue-tags .badge + .badge {
+	margin-left: 0.25em;
+}
+
 .issue-box .box-header {
 	border-bottom: 1px solid #ccc;
 	padding-bottom: 0.5em;
@@ -75,4 +89,11 @@
 .issue-info .issue-date {
 	color: grey;
 	margin-left: 1em;
+}
+
+.comment .comment-date {
+	position: absolute;
+	top: 0.5em;
+	right: 0.5em;
+	color: grey;
 }

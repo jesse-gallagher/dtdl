@@ -18,15 +18,15 @@ import { Component, Prop, State, Watch } from '@stencil/core';
 import moment from 'moment';
 
 @Component({
-    tag: 'app-date'
+    tag: 'app-datetime'
 })
-export class AppDate {
+export class AppDateTime {
     @Prop() private value: any;
 
     render() {
         if (!this.value) {
             return null;
         }
-        return <span class='moment-date' title={this.value}>{moment(this.value).format('l')}</span>;
+        return <span class='moment-date' title={this.value}>{moment(this.value).fromNow()}</span>;
     }
 }

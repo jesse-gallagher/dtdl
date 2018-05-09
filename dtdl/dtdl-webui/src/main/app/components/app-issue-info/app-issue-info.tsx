@@ -98,13 +98,13 @@ export class AppIssueInfo {
         if(!(issue.tags instanceof Array)) {
             return null;
         } else {
-            return <p>
+            return <span class='tags'>
                 {issue.tags.map(tag => {
                     const color = tag.color ? ('#'+tag.color) : '';
                     return <span class='badge badge-primary' style={{backgroundColor: color}}>{tag.name}</span>
                     })
                 }
-            </p>
+            </span>
         }
     }
     
@@ -120,7 +120,8 @@ export class AppIssueInfo {
             <div class="comments">
                 {this.comments.map(comment =>
                     <div class="comment issue-box">
-                        <p><app-user user={comment.postedBy}/></p>
+                        <span class='comment-poster'><app-user user={comment.postedBy}/></span>
+                        <span class='comment-date'><app-datetime value={comment.createdAt}/></span>
                         <div innerHTML={comment.body}></div>
                     </div>
                 )}

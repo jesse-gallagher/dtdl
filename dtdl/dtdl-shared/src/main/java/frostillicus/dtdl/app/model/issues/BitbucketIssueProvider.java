@@ -115,7 +115,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		}
 		
 		values.stream()
-			.map(this::createIssue)
+			.map(this::toIssue)
 			.forEach(result::add);
 		
 		// If there are more, fetch the next page
@@ -128,7 +128,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 	}
 	
 	@SneakyThrows
-	private Issue createIssue(Object obj) {
+	private Issue toIssue(Object obj) {
 		if(!(obj instanceof JsonObject)) {
 			throw new IllegalStateException("Received unexpected issue JSON: " + obj);
 		}
@@ -172,16 +172,8 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		Person assignee = toPerson(issue.getResponsible());
 		Person reportedBy = toPerson(issue.getReportedBy());
 		
-		String updatedS = issue.getLastUpdatedUtc();
-		Date updated = null;
-		if(StringUtil.isNotEmpty(updatedS)) {
-			updated = DATE_FORMAT.get().parse(updatedS);
-		}
-		String createdS = issue.getCreatedUtc();
-		Date created = null;
-		if(StringUtil.isNotEmpty(createdS)) {
-			created = DATE_FORMAT.get().parse(createdS);
-		}
+		Date updated = toDate(issue.getLastUpdatedUtc());
+		Date created = toDate(issue.getCreatedUtc());
 		
 		return Issue.builder()
 			.id(StringUtil.toString(issue.getLocalId()))
@@ -207,38 +199,29 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		JsonArray comments = (JsonArray)jsonObj;
 		
 		comments.stream()
-			.map(this::createComment)
+			.map(this::toComment)
 			.forEach(result::add);
 	}
 	
-	private Comment createComment(Object obj) {
+	private Comment toComment(Object obj) {
 		if(!(obj instanceof JsonObject)) {
 			throw new IllegalStateException("Received unexpected comment JSON: " + obj);
 		}
 		JsonObject json = (JsonObject)obj;
 		BitbucketComment comment = ModelUtil.toEntity(json, BitbucketComment.class);
 		
-		UserInfo u = comment.getAuthor();
-		Person postedBy = null;
-		if(u != null) {
-			String postedByUrl = null;
-			String uUri = u.getResourceUri();
-			if(StringUtil.isNotEmpty(uUri)) {
-				postedByUrl = "https://bitbucket.org" + uUri.substring("/1.0".length()); //$NON-NLS-1$ //$NON-NLS-2$
-			}
-			postedBy = Person.builder()
-				.name(u.getDisplayName())
-				.avatarUrl(u.getAvatar())
-				.url(postedByUrl)
-				.build();
-		}
-
+		Person postedBy = toPerson(comment.getAuthor());
+		Date created = toDate(comment.getCreatedUtc());
+		Date updated = toDate(comment.getUpdatedUtc());
+		
 		String content = comment.getContent();
 		String html = markdown.toHtml(content);
 		
 		return Comment.builder()
 			.id(StringUtil.toString(comment.getCommentId()))
 			.postedBy(postedBy)
+			.createdAt(created)
+			.updatedAt(updated)
 			.body(html)
 			.build();
 	}
@@ -264,6 +247,14 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		} else {
 			return null;
 		}
+	}
+	
+	@SneakyThrows
+	private Date toDate(String d) {
+		if(StringUtil.isNotEmpty(d)) {
+			return DATE_FORMAT.get().parse(d);
+		}
+		return null;
 	}
 	
 	private HttpClient getBitbucketClient(BitbucketInfo info) {
