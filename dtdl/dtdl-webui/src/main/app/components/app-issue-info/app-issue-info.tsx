@@ -38,6 +38,7 @@ export class AppIssueInfo {
     
     @Watch("issue")
     matchHandler(newValue:any, oldValue:any) {
+        this.comments = null;
         this.refreshComments();
     }
     
