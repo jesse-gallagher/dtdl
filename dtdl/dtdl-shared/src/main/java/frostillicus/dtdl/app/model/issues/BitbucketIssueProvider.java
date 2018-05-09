@@ -15,8 +15,11 @@
  */
 package frostillicus.dtdl.app.model.issues;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,6 +46,8 @@ import lombok.SneakyThrows;
 
 @ApplicationScoped
 public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo> {
+	
+	private static final ThreadLocal<DateFormat> DATE_FORMAT = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd hh:mm:ssX")); //$NON-NLS-1$
 	
 	public static final String API_BASE = "https://api.bitbucket.org/1.0"; //$NON-NLS-1$
 	public static final String REPOSITORIES_RESOURCE = "repositories"; //$NON-NLS-1$
@@ -122,6 +127,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		}
 	}
 	
+	@SneakyThrows
 	private Issue createIssue(Object obj) {
 		if(!(obj instanceof JsonObject)) {
 			throw new IllegalStateException("Received unexpected issue JSON: " + obj);
@@ -180,7 +186,17 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 						.url(assigneeUrl)
 						.build();
 			}
-			
+		}
+		
+		String updatedS = issue.getLastUpdatedUtc();
+		Date updated = null;
+		if(StringUtil.isNotEmpty(updatedS)) {
+			updated = DATE_FORMAT.get().parse(updatedS);
+		}
+		String createdS = issue.getCreatedUtc();
+		Date created = null;
+		if(StringUtil.isNotEmpty(createdS)) {
+			created = DATE_FORMAT.get().parse(createdS);
 		}
 		
 		return Issue.builder()
@@ -192,6 +208,8 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 			.version(version)
 			.body(html)
 			.assignedTo(assignee)
+			.createdAt(created)
+			.updatedAt(updated)
 			.build();
 	}
 	

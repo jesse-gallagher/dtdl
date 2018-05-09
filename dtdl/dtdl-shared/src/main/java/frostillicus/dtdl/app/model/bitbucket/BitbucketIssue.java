@@ -50,4 +50,6 @@ public class BitbucketIssue {
 	@Column("is_spam") private boolean spam;
 	@Column private Metadata metadata;
 	@Column private String content;
+	@Column("utc_last_updated") private String lastUpdatedUtc;
+	@Column("utc_created_on") private String createdUtc;
 }

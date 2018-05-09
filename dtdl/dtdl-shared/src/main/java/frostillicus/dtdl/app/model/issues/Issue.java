@@ -59,4 +59,5 @@ public class Issue {
 	@Column private Person assignedTo;
 	@Column private Person reportedBy;
 	@Column private Date createdAt;
+	@Column private Date updatedAt;
 }
