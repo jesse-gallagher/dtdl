@@ -169,24 +169,8 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 		String content = issue.getContent();
 		String html = markdown.toHtml(content);
 
-		UserInfo responsible = issue.getResponsible();
-		Person assignee = null;
-		if(responsible != null) {
-			String name = responsible.getDisplayName();
-			if(StringUtil.isNotEmpty(name)) {
-				String avatarUrl = responsible.getAvatar();
-				String responsibleUri = responsible.getResourceUri();
-				String assigneeUrl = null;
-				if(StringUtil.isNotEmpty(responsibleUri)) {
-					assigneeUrl = "https://bitbucket.org" + responsibleUri.substring("/1.0".length()); //$NON-NLS-1$ //$NON-NLS-2$
-				}
-				assignee = Person.builder()
-						.name(name)
-						.avatarUrl(avatarUrl)
-						.url(assigneeUrl)
-						.build();
-			}
-		}
+		Person assignee = toPerson(issue.getResponsible());
+		Person reportedBy = toPerson(issue.getReportedBy());
 		
 		String updatedS = issue.getLastUpdatedUtc();
 		Date updated = null;
@@ -210,6 +194,7 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 			.assignedTo(assignee)
 			.createdAt(created)
 			.updatedAt(updated)
+			.reportedBy(reportedBy)
 			.build();
 	}
 	
@@ -256,6 +241,29 @@ public class BitbucketIssueProvider extends AbstractIssueProvider<BitbucketInfo>
 			.postedBy(postedBy)
 			.body(html)
 			.build();
+	}
+	
+	private Person toPerson(UserInfo u) {
+		if(u != null) {
+			String name = u.getDisplayName();
+			if(StringUtil.isNotEmpty(name)) {
+				String avatarUrl = u.getAvatar();
+				String responsibleUri = u.getResourceUri();
+				String assigneeUrl = null;
+				if(StringUtil.isNotEmpty(responsibleUri)) {
+					assigneeUrl = "https://bitbucket.org" + responsibleUri.substring("/1.0".length()); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				return Person.builder()
+						.name(name)
+						.avatarUrl(avatarUrl)
+						.url(assigneeUrl)
+						.build();
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 	
 	private HttpClient getBitbucketClient(BitbucketInfo info) {
