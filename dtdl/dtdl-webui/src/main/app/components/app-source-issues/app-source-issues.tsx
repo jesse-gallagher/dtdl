@@ -121,9 +121,7 @@ export class AppSourceIssues {
             return null;
         }
         return (
-            <div>
-                <h2>{this.source.title}</h2>
-                
+            <div class='issues-pane'>
                 <div class="row">
                     <div class="col-md-5 col-sm-12 issue-list">
                 

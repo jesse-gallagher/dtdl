@@ -24,7 +24,7 @@ export class DTDLApp {
     render() {
         return (
             <div>
-                <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+                <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0">
                     <stencil-route-link url='/' class="navbar-brand col-sm-3 col-md-2 mr-0" activeClass="">Darwino To-Do List</stencil-route-link>
                 </nav>
 

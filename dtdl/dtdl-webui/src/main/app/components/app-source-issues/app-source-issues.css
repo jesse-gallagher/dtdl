@@ -13,6 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+.issues-pane {
+	height: calc(100vh - 48px);
+	overflow: hidden;
+}
+.issues-pane > .row > [class*=' col-'] {
+	padding-top: 1em;
+	
+	height: calc(100vh - 48px);
+	overflow-y: auto;
+	max-width: 100%;
+}
+
 .issue-list .active {
 	background-color: #007bff;
 	color: white;
