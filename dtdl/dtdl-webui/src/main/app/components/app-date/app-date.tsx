@@ -27,6 +27,6 @@ export class AppDate {
         if (!this.value) {
             return null;
         }
-        return <span class='moment-date'>{moment(this.value).calendar()}</span>;
+        return <span class='moment-date'>{moment(this.value).format('l')}</span>;
     }
 }
