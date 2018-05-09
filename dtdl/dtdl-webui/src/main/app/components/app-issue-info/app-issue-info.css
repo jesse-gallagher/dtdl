@@ -60,6 +60,13 @@
 	content: "Assignee: ";
 	color: grey;
 }
+.issue-info .issue-url {
+	display: block;
+}
+.issue-info .issue-url:before {
+	content: "Canonical URL: ";
+	color: grey;
+}
 
 .issue-box .box-header {
 	border-bottom: 1px solid #ccc;

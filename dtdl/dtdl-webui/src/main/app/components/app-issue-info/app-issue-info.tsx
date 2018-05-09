@@ -80,6 +80,7 @@ export class AppIssueInfo {
                     <span class='issue-status'>{issue.status}</span>
                     <span class='issue-tags'>{this.renderIssueTags(issue)}</span>
                     <span class='issue-assignee'><app-user user={issue.assignedTo} /></span>
+                    <span class='issue-url'><a href={issue.url} target='_blank'>Open</a></span>
                 </div>
                 <div class='issue-box'>
                     <div class='box-header'>
