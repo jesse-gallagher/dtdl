@@ -53,6 +53,13 @@
 	content: "Status: ";
 	color: grey;
 }
+.issue-info .issue-assignee {
+	display: block;
+}
+.issue-info .issue-assignee:before {
+	content: "Assignee: ";
+	color: grey;
+}
 
 .issue-box .box-header {
 	border-bottom: 1px solid #ccc;
