@@ -76,6 +76,8 @@ supports ((position: -webkit-sticky ) or (position: sticky )) { .sidebar-sticky
  */
 [role="main"] {
 	padding-top: 48px; /* Space for fixed navbar */
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 
 /*

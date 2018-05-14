@@ -133,7 +133,7 @@ export class AppSourceIssues {
                         
                         {this.renderIssues()}
                     </div>
-                    <div class="col-md-7 col-sm-12">
+                    <div class="col-md-7 col-sm-12 issue-pane">
                          {this.renderIssueInfo()}
                     </div>
                 </div>

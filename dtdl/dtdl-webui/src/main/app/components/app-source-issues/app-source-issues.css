@@ -18,12 +18,23 @@
 	height: calc(100vh - 48px);
 	overflow: hidden;
 }
+.issues-pane > .row {
+	margin: 0;
+	padding: 0;
+}
 .issues-pane > .row > [class*=' col-'] {
-	padding-top: 1em;
+	padding-top: 0;
+	padding-left: 0;
+	padding-right: 0;
 	
 	height: calc(100vh - 48px);
 	overflow-y: auto;
 	max-width: 100%;
+}
+
+.issue-list {
+	min-height: calc(100vh - 48px);
+	border-right: 1px solid #eee;
 }
 
 .issue-list .active {
@@ -78,7 +89,6 @@
 	border-top: 1px solid lightgrey;
 }
 
-.issue-list .issue-pane {
+.issues-pane .issue-pane {
 	background-color: #f9f9f9;
-	padding: 1em;
 }
