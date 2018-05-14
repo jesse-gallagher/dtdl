@@ -24,6 +24,9 @@ import com.darwino.commons.Platform;
 import com.darwino.commons.json.JsonException;
 import com.darwino.swt.platform.hybrid.SwtMain;
 
+import javax.enterprise.inject.se.SeContainer;
+import javax.enterprise.inject.se.SeContainerInitializer;
+
 /**
  * SWT Application
  */
@@ -32,6 +35,13 @@ public class SwtMainClass extends SwtMain {
 	@Override
 	public String getApplicationId() {
 		return "frostillicus.dtdl"; //$NON-NLS-1$
+	}
+	
+	@Override
+	public void execute() {
+		try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
+			super.execute();
+		}
 	}
 	
 	@Override
