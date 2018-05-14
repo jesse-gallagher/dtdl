@@ -36,5 +36,7 @@ public class AppPlugin extends AppMobilePlugin {
 		if(serviceClass==CommandsExtension.class) {
 			extensions.add(new AppHybridActions());
 		}
+		
+		super.findExtensions(serviceClass, extensions);
 	}
 }
