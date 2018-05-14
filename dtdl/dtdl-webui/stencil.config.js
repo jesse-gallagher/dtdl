@@ -3,10 +3,14 @@ exports.config = {
   outputTargets: [
     {
       type: 'www',
-      dir: 'src/main/resources/DARWINO-INF/resources'
+      dir: 'src/main/resources/DARWINO-INF/resources',
+      serviceWorker: {
+    	  swSrc: 'sw.js'
+      }
     }
   ],
-  globalScript: 'src/main/app/global/context.ts'
+  globalScript: 'src/main/app/global/context.ts',
+  enableCache: false
 };
 
 exports.devServer = {
