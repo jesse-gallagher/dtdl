@@ -18,6 +18,7 @@ package frostillicus.dtdl.app;
 import java.io.InputStream;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 
 import com.darwino.commons.Platform;
@@ -67,6 +68,15 @@ public class SwtMainClass extends SwtMain {
 		return super.getIcons();
 	}
 	
+	@Override
+	protected Point getMinimumMainWindowSize() {
+		return new Point(1000, 500);
+	}
+	
+	@Override
+	protected boolean isDisplayBrowserBorder() {
+		return false;
+	}
 	
 	public static void main(String[] args) {
 		SwtMainClass main = new SwtMainClass();
