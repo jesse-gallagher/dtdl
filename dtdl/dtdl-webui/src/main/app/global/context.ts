@@ -16,4 +16,8 @@
 
 declare var Context: any;
 
-Context.httpBase = 'http://localhost:8081/dtdl/';
+if(location.port === "3333") {
+    Context.httpBase = 'http://localhost:8081/dtdl/';    
+} else {
+    Context.httpBase = location.href;
+}
