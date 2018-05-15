@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-import org.darwino.jnosql.diana.driver.EntityConverter;
 import org.eclipse.egit.github.core.Label;
 import org.eclipse.egit.github.core.Milestone;
 import org.eclipse.egit.github.core.RepositoryId;
@@ -17,7 +16,6 @@ import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.IssueService;
 
 import com.darwino.commons.json.JsonException;
-import com.darwino.commons.json.JsonObject;
 import com.darwino.commons.util.DateTimeISO8601;
 import com.darwino.commons.util.StringUtil;
 import com.darwino.github.issues.jstore.impl.DataChangeEntryGitHubIssues;
