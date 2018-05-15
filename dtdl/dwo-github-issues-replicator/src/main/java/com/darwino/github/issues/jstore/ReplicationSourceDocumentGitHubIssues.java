@@ -4,6 +4,12 @@ import com.darwino.commons.json.JsonException;
 import com.darwino.jsonstore.Attachment;
 import com.darwino.jsonstore.replication.impl.ReplicationSourceDocument;
 
+/**
+ * Source document wrapper for the GitHub Issues API.
+ * 
+ * @author Jesse Gallagher
+ * @since 0.0.1
+ */
 public class ReplicationSourceDocumentGitHubIssues extends ReplicationSourceDocument {
 
 	@Override

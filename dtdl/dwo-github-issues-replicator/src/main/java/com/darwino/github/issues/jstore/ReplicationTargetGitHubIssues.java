@@ -14,6 +14,12 @@ import com.darwino.jsonstore.replication.impl.ReplicationTargetDocument;
 import com.darwino.jsonstore.replication.impl._AttachmentData;
 import com.darwino.jsonstore.replication.impl._DocumentData;
 
+/**
+ * The entry point for the GitHub Issues API as a Darwino replication target.
+ * 
+ * @author Jesse Gallagher
+ * @since 0.0.1
+ */
 public class ReplicationTargetGitHubIssues extends AbstractReplicationTarget {
 
 	@Override
@@ -65,15 +71,13 @@ public class ReplicationTargetGitHubIssues extends AbstractReplicationTarget {
 	}
 
 	@Override
-	public ReplicationTargetDocument newDocument(ReplicationSourceDocument sourceDocument,
-			DocumentDataChangeEntry entry) throws JsonException {
+	public ReplicationTargetDocument newDocument(ReplicationSourceDocument sourceDocument, DocumentDataChangeEntry entry) throws JsonException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ReplicationTargetDocument loadDocument(ReplicationSourceDocument sourceDocument,
-			DocumentDataChangeEntry entry) throws JsonException {
+	public ReplicationTargetDocument loadDocument(ReplicationSourceDocument sourceDocument, DocumentDataChangeEntry entry) throws JsonException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -97,15 +101,13 @@ public class ReplicationTargetGitHubIssues extends AbstractReplicationTarget {
 	}
 
 	@Override
-	public Attachment newDocumentAttachment(ReplicationTargetDocument document, String name, Content content,
-			_AttachmentData data) throws JsonException {
+	public Attachment newDocumentAttachment(ReplicationTargetDocument document, String name, Content content, _AttachmentData data) throws JsonException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void updateDocumentAttachment(Attachment attachment, Content content, _AttachmentData data)
-			throws JsonException {
+	public void updateDocumentAttachment(Attachment attachment, Content content, _AttachmentData data) throws JsonException {
 		// TODO Auto-generated method stub
 
 	}

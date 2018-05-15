@@ -5,6 +5,12 @@ import com.darwino.jsonstore.Attachment;
 import com.darwino.jsonstore.replication.impl.ReplicationSourceDocument;
 import com.darwino.jsonstore.replication.impl.ReplicationTargetDocument;
 
+/**
+ * Target document wrapper for the GitHub Issues API.
+ * 
+ * @author Jesse Gallagher
+ * @since 0.0.1
+ */
 public class ReplicationTargetDocumentGitHubIssues extends ReplicationTargetDocument {
 
 	@Override

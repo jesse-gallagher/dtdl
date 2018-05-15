@@ -8,6 +8,12 @@ import com.darwino.jsonstore.replication.impl.DocumentDataChangeEntry;
 import com.darwino.jsonstore.replication.impl.ReplicationSourceChangeCursor;
 import com.darwino.jsonstore.replication.impl.ReplicationSourceDocument;
 
+/**
+ * The entry point for the GitHub Issues API as a Darwino replication source.
+ * 
+ * @author Jesse Gallagher
+ * @since 0.0.1
+ */
 public class ReplicationSourceGitHubIssues extends AbstractReplicationSource {
 
 	@Override
