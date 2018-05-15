@@ -7,7 +7,9 @@ import com.darwino.jsonstore.replication.impl.ReplicationSource;
 import com.darwino.jsonstore.replication.impl.ReplicationTarget;
 
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 
+@ToString
 public class ReplicatorGitHubIssuesFromLocal extends BaseReplicator {
 
 	/**

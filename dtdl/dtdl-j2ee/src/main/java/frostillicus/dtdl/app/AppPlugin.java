@@ -24,6 +24,9 @@ import com.darwino.commons.security.acl.UserService;
 import com.darwino.j2ee.platform.DefaultWebBeanExtension;
 import com.darwino.j2ee.platform.DefaultWebPropertiesExtension;
 import com.darwino.j2ee.servlet.authentication.AuthenticationService;
+import com.darwino.platform.DarwinoContextFactory;
+
+import frostillicus.dtdl.app.util.ServerContextFactory;
 
 
 
@@ -67,5 +70,13 @@ public class AppPlugin extends PluginImpl {
 		}
 		
 		super.findExtensions(serviceClass, extensions);
+	}
+	
+	@Override
+	public Object findDefaultService(Class<?> serviceClass) {
+		if(serviceClass == DarwinoContextFactory.class) {
+			return new ServerContextFactory();
+		}
+		return super.findDefaultService(serviceClass);
 	}
 }
