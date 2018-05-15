@@ -23,13 +23,14 @@ import com.darwino.jsonstore.meta._Database;
 
 /**
  * Database Definition.
- * 
- * @author Philippe Riand
  */
 public class AppDatabaseDef extends DatabaseFactoryImpl {
 
-	public static final int DATABASE_VERSION	= 4;
+	public static final int DATABASE_VERSION	= 5;
 	public static final String DATABASE_NAME	= "dtdl"; //$NON-NLS-1$
+	
+	public static final String STORE_ISSUES = "issues"; //$NON-NLS-1$
+	public static final String STORE_COMMENTS = "comments"; //$NON-NLS-1$
 	
     public static final String[] DATABASES = new String[] {
     	DATABASE_NAME
@@ -70,6 +71,13 @@ public class AppDatabaseDef extends DatabaseFactoryImpl {
 		_Database db = new _Database(DATABASE_NAME, "Darwino To-Do List", DATABASE_VERSION); //$NON-NLS-1$
 
 		db.setReplicationEnabled(true);
+		
+		{
+			db.addStore(STORE_ISSUES);
+		}
+		{
+			db.addStore(STORE_COMMENTS);
+		}
 
 		return db;
 	}

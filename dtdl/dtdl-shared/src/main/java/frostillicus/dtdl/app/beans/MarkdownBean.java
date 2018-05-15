@@ -23,6 +23,11 @@ import org.commonmark.renderer.html.HtmlRenderer;
 
 @ApplicationScoped
 public class MarkdownBean {
+	
+	/**
+	 * Singleton instance for use outside of CDI environments.
+	 */
+	public static final MarkdownBean INSTANCE = new MarkdownBean();
 
 	private Parser markdown = Parser.builder().build();
 	private HtmlRenderer markdownHtml = HtmlRenderer.builder().build();

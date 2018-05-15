@@ -34,8 +34,8 @@
 	</developers>
 	
 	<modules>
-		<module>dwo-github-issues-replicator</module>
 		<module>dtdl-shared</module>
+		<module>dtdl-github-replicator</module>
 		<module>dtdl-webui</module>
 		<module>dtdl-j2ee</module>
 		<module>dtdl-mobile</module>

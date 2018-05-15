@@ -9,7 +9,7 @@
 		<artifactId>dtdl</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>dwo-github-issues-replicator</artifactId>
+	<artifactId>dtdl-github-replicator</artifactId>
 	
 	<name>GitHub Issues Darwino Replicator</name>
 	
@@ -24,6 +24,19 @@
 			<groupId>org.eclipse.mylyn.github</groupId>
 			<artifactId>org.eclipse.egit.github.core</artifactId>
 			<version>2.1.5</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.20</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>dtdl-shared</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

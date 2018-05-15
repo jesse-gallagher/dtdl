@@ -75,6 +75,11 @@
 			<artifactId>dtdl-webui</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>frostillicus.dtdl</groupId>
+			<artifactId>dtdl-github-replicator</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.weld.servlet</groupId>
