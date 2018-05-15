@@ -206,12 +206,12 @@ public class ReplicationSourceChangeCursorGitHubIssues extends ReplicationSource
 	
 	@SneakyThrows
 	private DocumentChangeEntry toChangeEntry(Issue issue) {
-		int seqId = 0;
+		int seqId = 1;
 		long mdate = issue.getUpdatedAt().getTime();
 		int updateId = generateUpdateId(mdate);
 		
 		ReplicationSourceDocumentGitHubIssues doc = ReplicationSourceDocumentGitHubIssues.builder()
-			.instId(null)
+			.instId(StringUtil.EMPTY_STRING)
 			.storeId(issueStoreId)
 			.unid(issue.getUrl())
 			.replicaId(getSource().getRepositoryId())
