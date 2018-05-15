@@ -122,7 +122,7 @@ public class AppContextListener extends AbstractDarwinoContextListener {
 						try {
 							Database database = DarwinoContext.get().getSession().getDatabase(AppDatabaseDef.DATABASE_NAME);
 							GitHubInfo info = (GitHubInfo)s.getInfoHolder();
-							ReplicatorGitHubIssuesFromLocal replicator = new ReplicatorGitHubIssuesFromLocal(database, info.getToken(), info.getRepository(), AppDatabaseDef.STORE_ISSUES, AppDatabaseDef.STORE_COMMENTS);
+							ReplicatorGitHubIssuesFromLocal replicator = new ReplicatorGitHubIssuesFromLocal(database, info.getToken(), info.getRepository(), AppDatabaseDef.STORE_ISSUES, AppDatabaseDef.STORE_COMMENTS, null);
 							
 							ReplicationProfile profile = new ReplicationProfileGitHubIssues();
 							ReplicationOptions opts = new ReplicationOptions(profile);

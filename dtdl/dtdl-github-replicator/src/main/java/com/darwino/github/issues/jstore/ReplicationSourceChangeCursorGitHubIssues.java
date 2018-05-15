@@ -42,11 +42,12 @@ public class ReplicationSourceChangeCursorGitHubIssues extends ReplicationSource
 	private final String repId;
 	private final String issueStoreId;
 	private final String commentStoreId;
+	private final String instanceId;
 	
 	private final AtomicBoolean initialized = new AtomicBoolean(false);
 	private Deque<Issue> issues;
 	
-	public ReplicationSourceChangeCursorGitHubIssues(ReplicationSourceGitHubIssues source, ReplicationOptions options, long startDate, long endDate, String repId, String issueStoreId, String commentStoreId) throws JsonException {
+	public ReplicationSourceChangeCursorGitHubIssues(ReplicationSourceGitHubIssues source, ReplicationOptions options, long startDate, long endDate, String repId, String issueStoreId, String commentStoreId, String instanceId) throws JsonException {
 		super(source, options);
 		
 		this.startDate = startDate;
@@ -54,6 +55,7 @@ public class ReplicationSourceChangeCursorGitHubIssues extends ReplicationSource
 		this.repId = repId;
 		this.issueStoreId = issueStoreId;
 		this.commentStoreId = commentStoreId;
+		this.instanceId = StringUtil.toString(instanceId);
 	}
 
 	@Override
@@ -211,7 +213,7 @@ public class ReplicationSourceChangeCursorGitHubIssues extends ReplicationSource
 		int updateId = generateUpdateId(mdate);
 		
 		ReplicationSourceDocumentGitHubIssues doc = ReplicationSourceDocumentGitHubIssues.builder()
-			.instId(StringUtil.EMPTY_STRING)
+			.instId(instanceId)
 			.storeId(issueStoreId)
 			.unid(issue.getUrl())
 			.replicaId(getSource().getRepositoryId())

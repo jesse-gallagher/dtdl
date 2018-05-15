@@ -17,11 +17,12 @@ public class ReplicatorGitHubIssuesFromLocal extends BaseReplicator {
 	 * @param repositoryId the GitHub repository ID, in the format "organization/repo_name"
 	 * @param issueStoreId the store ID for issues in the local database
 	 * @param commentStoreId the store ID for comments in the local database
+	 * @param instanceId the local database instance ID for replicated-in documents
 	 */
-	public ReplicatorGitHubIssuesFromLocal(Database darwinoDatabase, String token, String repositoryId, String issueStoreId, String commentStoreId) {
+	public ReplicatorGitHubIssuesFromLocal(Database darwinoDatabase, String token, String repositoryId, String issueStoreId, String commentStoreId, String instanceId) {
 		super(
 			new ReplicatorLocalDatabaseFactory(darwinoDatabase),
-			new ReplicatorGitHubIssuesFactory(token, repositoryId, issueStoreId, commentStoreId)
+			new ReplicatorGitHubIssuesFactory(token, repositoryId, issueStoreId, commentStoreId, instanceId)
 		);
 	}
 
@@ -31,10 +32,11 @@ public class ReplicatorGitHubIssuesFromLocal extends BaseReplicator {
 		private final String repositoryId;
 		private final String issueStoreId;
 		private final String commentStoreId;
+		private final String instanceId;
 		
 		@Override
 		public ReplicationSource createReplicationSource() throws JsonException {
-			return new ReplicationSourceGitHubIssues(token, repositoryId, issueStoreId, commentStoreId);
+			return new ReplicationSourceGitHubIssues(token, repositoryId, issueStoreId, commentStoreId, instanceId);
 		}
 
 		@Override

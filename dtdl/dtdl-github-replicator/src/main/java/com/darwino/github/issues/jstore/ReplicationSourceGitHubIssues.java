@@ -23,20 +23,25 @@ public class ReplicationSourceGitHubIssues extends AbstractReplicationSource {
 	private final String repositoryId;
 	private final String issueStoreId;
 	private final String commentStoreId;
+	private final String instanceId;
 
 	/**
 	 * Constructs a new GitHub Issues replication source for the given repository.
 	 * 
 	 * @param token the OAuth2 access token to use
 	 * @param repositoryId the ID of the repository, in the format "organization/repo_name"
+	 * @param issueStoreId the store ID for issues in the local database
+	 * @param commentStoreId the store ID for comments in the local database
+	 * @param instanceId the local database instance ID for replicated-in documents
 	 */
-	public ReplicationSourceGitHubIssues(String token, String repositoryId, String issueStoreId, String commentStoreId) {
+	public ReplicationSourceGitHubIssues(String token, String repositoryId, String issueStoreId, String commentStoreId, String instanceId) {
 		super();
 		
 		this.token = token;
 		this.repositoryId = repositoryId;
 		this.issueStoreId = issueStoreId;
 		this.commentStoreId = commentStoreId;
+		this.instanceId = instanceId;
 	}
 
 	@Override
@@ -57,7 +62,7 @@ public class ReplicationSourceGitHubIssues extends AbstractReplicationSource {
 
 	@Override
 	public ReplicationSourceChangeCursor createChangeCursor(ReplicationOptions options, long startDate, long endDate, String repId) throws JsonException {
-		return new ReplicationSourceChangeCursorGitHubIssues(this, options, startDate, endDate, repId, issueStoreId, commentStoreId);
+		return new ReplicationSourceChangeCursorGitHubIssues(this, options, startDate, endDate, repId, issueStoreId, commentStoreId, instanceId);
 	}
 
 	/**
